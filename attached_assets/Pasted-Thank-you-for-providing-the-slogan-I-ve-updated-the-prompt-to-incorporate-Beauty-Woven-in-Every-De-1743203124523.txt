@@ -1,0 +1,95 @@
+Thank you for providing the slogan! I’ve updated the prompt to incorporate "Beauty Woven in Every Detail" as the official tagline for Beautify by Angel. Below is the revised, detailed prompt with the slogan seamlessly integrated and all other requirements preserved.
+Prompt for Website Development: Beautify by Angel
+You are tasked with designing and developing a premium website for a Nairobi, Kenya-based beauty brand called Beautify by Angel, owned and led by CEO Angel Mwende. The brand specializes in four core services: hair braiding, makeup artistry, nail artistry, and henna artistry. The website must reflect a luxurious, modern, and user-centric design philosophy inspired by Apple’s website—characterized by minimalism, clean typography, intuitive navigation, high-quality visuals, and a seamless user experience. The official slogan, “Beauty Woven in Every Detail,” should be prominently featured and embodied in the design and content. Additionally, the website must incorporate a booking system with specific functionality for clients and the owner, a visible policy section tied to bookings, and a stunning color palette inspired by big beauty brands like Fenty. Below are the detailed requirements:
+1. Design Philosophy (Inspired by Apple)
+Minimalist Aesthetic: Use ample white space, sleek layouts, and a clutter-free interface to emphasize sophistication and elegance. Every element should feel purposeful, reflecting the slogan “Beauty Woven in Every Detail” through meticulous design choices.
+Typography: Incorporate bold, sans-serif fonts (e.g., Helvetica Neue or similar) for headings, paired with a softer, readable font for body text. Font sizes should be large and striking for headers, with a hierarchy that guides the user naturally through the content.
+High-Quality Visuals: Feature large, crisp, professionally shot images and videos showcasing the brand’s services—hair braiding, makeup, nails, and henna artistry. Images should have a consistent style (e.g., soft lighting, vibrant yet natural tones) and load quickly without compromising quality, embodying the attention to detail in the slogan.
+Smooth Animations: Subtle animations (e.g., fade-ins, hover effects) should enhance the experience without overwhelming the user, mirroring Apple’s understated yet polished transitions.
+Intuitive Navigation: A sticky top navigation bar with simple menu items (e.g., Home, Services, About, Book Now, Contact) that collapses into a hamburger menu on mobile. Navigation should feel effortless and prioritize the booking process.
+Mobile Responsiveness: The design must be fully responsive, maintaining its elegance and functionality across all devices (desktop, tablet, mobile), with a mobile-first approach to ensure accessibility for Nairobi’s on-the-go clientele.
+2. Color Palette (Inspired by Fenty and Luxury Brands)
+Primary Colors:
+Rich Plum (#4B2E4A): A deep, regal purple to convey luxury and creativity, used for headings and key accents.
+Golden Amber (#D4A017): A warm, metallic gold for call-to-action buttons (e.g., “Book Now”) and highlights, symbolizing premium quality.
+Secondary Colors:
+Soft Blush (#F8C1C6): A delicate pink for backgrounds or subtle accents, adding femininity and warmth.
+Midnight Black (#1A1A1A): A near-black shade for text and bold contrasts, ensuring readability and sophistication.
+Neutral Base:
+Crisp White (#FFFFFF): The dominant background color to maintain Apple’s clean aesthetic and make visuals pop.
+Warm Ivory (#F5F1E9): A soft off-white for secondary sections to add depth without starkness.
+The palette should feel cohesive, luxurious, and vibrant yet balanced, appealing to a clientele seeking high-end beauty services in Nairobi, while subtly weaving beauty into every visual detail.
+3. Website Structure and Features
+Homepage
+Hero Section: A full-width, high-resolution image or looping video of Angel Mwende working on a client (e.g., braiding hair or applying makeup), overlaid with the slogan: “Beauty Woven in Every Detail” in bold Rich Plum text and a Golden Amber “Book Now” button. The tagline should feel like the heartbeat of the brand, instantly conveying precision and artistry.
+Service Highlights: Four interactive cards (one for each service—Hair Braiding, Makeup Artistry, Nail Artistry, Henna Artistry) with hover effects revealing brief descriptions and a “Learn More” link. Each card should subtly tie back to the slogan with phrases like “Details in Every Braid” or “Artistry in Every Stroke.”
+About Snippet: A brief intro to Angel Mwende, her passion for beauty, and her Nairobi-based vision, paired with a professional headshot. Include a line like, “Angel weaves beauty into every detail of your experience.”
+Testimonials: A carousel of client reviews with photos (if available) in Soft Blush frames, emphasizing trust and quality, with a subtle nod to the slogan (e.g., “The details made all the difference!”).
+Footer: Contact info (phone, email, Nairobi location), social media icons, and links to Privacy Policy, Terms, and Booking Policy.
+Services Page
+Dedicated subpages for each service with detailed descriptions, pricing, and galleries of past work (e.g., braiding styles, makeup looks, nail designs, henna patterns). Each subpage should reinforce the slogan—e.g., “Hair Braiding: Where Every Strand Tells a Story.”
+Each subpage should have a “Book This Service” button in Golden Amber that directs to the booking system.
+About Page
+A storytelling section about Angel Mwende—her journey, expertise, and commitment to empowering beauty in Nairobi. Include a full-width image of her workspace or a candid shot of her with clients, captioned with “Beauty Woven in Every Detail.”
+Highlight the brand’s values: creativity, precision, and client satisfaction, tying them to the slogan.
+Booking System
+Client Booking Process:
+A “Book Now” page accessible from every section, featuring a calendar displaying only Angel’s available time slots (set by her via the admin panel).
+Clients select a service (dropdown menu), choose a date/time from available slots, and input their details (name, phone, email).
+Before finalizing, a pop-up displays the Booking Policy (e.g., cancellation rules, deposit requirements) with an “I Agree” checkbox required to proceed.
+Upon submission, clients receive a confirmation email/SMS with their appointment details and a branded message like, “We can’t wait to weave beauty into your details!”
+Owner Admin Panel:
+A secure login for Angel Mwende to access a dashboard where she can:
+Set her availability (e.g., block off days/hours she’s unavailable, set working hours like 9 AM–6 PM).
+View all bookings in a calendar or list format, with client details and service type.
+Approve, reschedule, or cancel appointments, triggering automatic notifications to clients.
+Export booking data for records (e.g., CSV format).
+The panel should be simple yet functional, with a Plum and Gold accent design for consistency.
+Contact Page
+A form for inquiries (name, email, message) with a Nairobi map embed showing the salon’s location.
+Display business hours, phone number, and email in Midnight Black text, with the slogan “Beauty Woven in Every Detail” subtly placed near the contact info.
+4. Booking Policy Integration
+The Booking Policy must appear as a pop-up or collapsible section during the booking process, written in clear, concise language. Example content:
+“Appointments require a 50% deposit, refundable if canceled 48 hours in advance. No-shows forfeit the deposit. Rescheduling is allowed once with 24-hour notice.”
+Include a link to the full policy in the footer for transparency.
+5. Technical Requirements
+Platform: Use a CMS like WordPress or a custom-built site with React for flexibility and scalability.
+Booking Integration: Leverage tools like Calendly (customized) or a bespoke solution for the availability system.
+Performance: Optimize for fast load times (under 2 seconds) with compressed images and lazy loading.
+SEO: Optimize for Nairobi-based beauty searches (e.g., “hair braiding Nairobi,” “henna artist near me”) with meta tags, alt text, and location-specific keywords.
+Security: SSL certificate, GDPR-compliant data handling, and secure payment integration (e.g., M-Pesa for deposits, common in Kenya).
+6. Tone and Voice
+The website’s copy should feel warm, empowering, and luxurious, weaving the slogan into the narrative—e.g., “Transform your look with beauty woven in every detail” or “Nairobi’s premier destination for artistry in every touch.”
+Use an inclusive, confident tone that resonates with a diverse clientele seeking premium services.
+Deliverables
+A fully functional website with the above features, designed in the specified color palette and Apple-inspired philosophy, with “Beauty Woven in Every Detail” as the guiding thread.
+A style guide documenting fonts, colors, and design principles for future consistency.
+A user manual for Angel to manage the admin panel and update content.
+This website should position Beautify by Angel as Nairobi’s go-to luxury beauty service, blending functionality with an unforgettable aesthetic experience where every detail shines.
+Let me know if you’d like me to refine this further or if you’d like a mockup image of the concept (e.g., the homepage design) after confirming with you! How would you like to proceed? 
+Client Policy for Beautify with Angel
+Welcome to Beautify with Angel ! Here are the 2025 policies you need to know before we provide our services:
+
+Prices: ALL PRICES ARE FIXED, and due considerations have been taken.
+ The tagged prices are exclusively for labour, incase you  would wish to purchase from us, please find the attached braids/hairpiece pricelist
+
+Deposits: A 30 %  deposit is required to secure your appointment. This deposit goes towards your total service fee. The remaining balance for your service can be paid in cash or via M-Pesa upon completion.
+The tagged prices are exclusively for labour, incase you 
+Hair Preparation: Please arrive with your hair washed, detangled, stretched, and properly blow-dried. If you prefer, you can add shampoo and conditioning to your service for an additional fee.
+Product Use: Do not use any oil in your hair on the day of your appointment as it can affect the styling process.
+Cleanliness: If your hair is not clean upon arrival, I will refuse service, your appointment will be canceled.
+Booking the Right Style: Ensure you book the hairstyle you want before your appointment. Changes cannot be made on the day of the appointment.
+Attitude: Please arrive with a positive attitude; it creates a pleasant working environment for both of us.
+Dress Code: Dress in a manner that makes you feel good as we take pictures and videos after your hair is styled, with your permission of course .
+Cancellations and Rescheduling:
+All cancellations or reschedules must be done at least 24 hours before your appointment. If not, or if you do not show up, 10% of the service fee will be charged from your deposit.
+Emergency Appointments: For emergency or last-minute appointments, please send me a direct message. Note that there might be an additional fee of Ksh 250 for such requests.
+Booking on Event Days: Please avoid booking on days you have events as I prefer not to rush through my work to ensure quality.
+Location: Services are provided at your location within Nairobi . Please provide your exact address when booking.
+For all home services transport to and fro shall be catered for by you
+Inquiries: For any inquiries, feel free to message me directly.
+
+Thank you for choosing Beautify with Angel. I look forward to providing you with a wonderful beauty experience at your home!
+
+
+everything should work
