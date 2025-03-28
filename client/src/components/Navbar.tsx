@@ -33,25 +33,24 @@ export default function Navbar() {
     { name: "Services", path: "/#services" },
     { name: "About", path: "/about" },
     { name: "Testimonials", path: "/#testimonials" },
-    { name: "Contact", path: "/contact" },
   ];
   
   return (
     <header className={`fixed w-full top-0 z-50 transition-all duration-300 ${
-      isScrolled ? "bg-[var(--color-plum)] shadow-md" : "bg-transparent"
+      isScrolled ? "bg-primary shadow-md" : "bg-transparent"
     }`}>
       <nav className="container mx-auto px-4 md:px-8 py-4 flex justify-between items-center">
         <Link href="/">
           <a className="font-bold text-2xl text-white">
-            Beautify <span className="text-[var(--color-amber)]">by Angel</span>
+            Beautify <span className="text-white/90">by Angel</span>
           </a>
         </Link>
         
         <div className="hidden md:flex space-x-8 text-white">
           {navLinks.map((link) => (
             <Link key={link.path} href={link.path}>
-              <a className={`hover:text-[var(--color-amber)] transition ${
-                location === link.path ? "text-[var(--color-amber)]" : ""
+              <a className={`hover:text-white/80 transition ${
+                location === link.path ? "text-white/90 font-medium" : ""
               }`}>
                 {link.name}
               </a>
@@ -59,11 +58,19 @@ export default function Navbar() {
           ))}
         </div>
         
-        <Link href="/booking">
-          <Button className="bg-[var(--color-amber)] hover:bg-[var(--color-amber)]/90 text-white px-6 py-2 rounded shadow-md">
-            Book Now
-          </Button>
-        </Link>
+        <div className="hidden md:flex items-center space-x-4">
+          <Link href="/contact">
+            <Button variant="outline" className="border-white text-white hover:bg-white hover:text-primary">
+              Contact
+            </Button>
+          </Link>
+          
+          <Link href="/booking">
+            <Button className="bg-white text-primary hover:bg-white/90 px-6 py-2 rounded shadow-md">
+              Book Now
+            </Button>
+          </Link>
+        </div>
         
         <button 
           className="md:hidden text-white" 
@@ -85,15 +92,20 @@ export default function Navbar() {
             <div className="flex flex-col space-y-4">
               {navLinks.map((link) => (
                 <Link key={link.path} href={link.path}>
-                  <a className={`text-[var(--color-plum)] hover:text-[var(--color-amber)] transition ${
-                    location === link.path ? "text-[var(--color-amber)]" : ""
+                  <a className={`text-primary hover:text-primary/80 transition ${
+                    location === link.path ? "text-primary/90 font-medium" : ""
                   }`}>
                     {link.name}
                   </a>
                 </Link>
               ))}
+              <Link href="/contact">
+                <a className="border border-primary text-primary px-4 py-2 rounded text-center hover:bg-primary/10 transition">
+                  Contact
+                </a>
+              </Link>
               <Link href="/booking">
-                <a className="bg-[var(--color-amber)] text-white px-6 py-2 rounded text-center hover:bg-opacity-90 transition shadow-md">
+                <a className="bg-primary text-white px-6 py-2 rounded text-center hover:bg-primary/90 transition shadow-md mt-2">
                   Book Now
                 </a>
               </Link>

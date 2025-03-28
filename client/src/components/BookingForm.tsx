@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -10,15 +10,46 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Calendar } from "@/components/ui/calendar";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { services } from "@/lib/constants";
 import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import PolicyModal from "@/components/PolicyModal";
 
+// Define types for service data
+interface ServicePackage {
+  name: string;
+  price: string;
+  duration: string;
+  description: string;
+  features: string[];
+}
+
+interface Service {
+  id: number;
+  title: string;
+  description: string;
+  image: string;
+  longDescription: string;
+  expectationsList: string[];
+  startingPrice: string;
+  duration: string;
+  priceImage?: string;
+  packages: ServicePackage[];
+  galleryImages: string[];
+}
+
 // Form validation schema
 const bookingSchema = z.object({
   service: z.string({
     required_error: "Please select a service",
+  }),
+  servicePackage: z.string({
+    required_error: "Please select a service package",
+  }),
+  styleSize: z.string({
+    required_error: "Please select a style size",
   }),
   date: z.date({
     required_error: "Please select a date",
@@ -34,9 +65,16 @@ const bookingSchema = z.object({
     .max(15, { message: "Please enter a valid phone number" }),
   email: z.string()
     .email({ message: "Please enter a valid email address" }),
+  location: z.enum(["salon", "home"], {
+    required_error: "Please select a service location",
+  }),
+  additionalLength: z.boolean().default(false),
   notes: z.string().optional(),
   policyAgreed: z.boolean().refine(val => val === true, {
     message: "You must agree to the booking policy",
+  }),
+  priceAcknowledged: z.boolean().refine(val => val === true, {
+    message: "You must acknowledge the final price",
   }),
 });
 
@@ -52,26 +90,111 @@ interface BookingFormProps {
 export default function BookingForm({ availableTimes, availableDates, loadingTimes, onSuccess }: BookingFormProps) {
   const { toast } = useToast();
   const [policyModalOpen, setPolicyModalOpen] = useState(false);
+  const [selectedService, setSelectedService] = useState<Service | null>(null);
+  const [selectedPackage, setSelectedPackage] = useState<ServicePackage | null>(null);
+  const [basePrice, setBasePrice] = useState<string>("0");
+  const [totalPrice, setTotalPrice] = useState<number>(0);
   
   // Form setup
   const form = useForm<BookingForm>({
     resolver: zodResolver(bookingSchema),
     defaultValues: {
       service: "",
+      servicePackage: "",
+      styleSize: "",
       date: undefined,
       time: "",
       name: "",
       phone: "",
       email: "",
+      location: "salon",
+      additionalLength: false,
       notes: "",
       policyAgreed: false,
+      priceAcknowledged: false,
     },
   });
+  
+  // Watch for form value changes
+  const watchService = form.watch("service");
+  const watchPackage = form.watch("servicePackage");
+  const watchStyleSize = form.watch("styleSize");
+  const watchLocation = form.watch("location");
+  const watchAdditionalLength = form.watch("additionalLength");
+  
+  // Update selected service when service id changes
+  useEffect(() => {
+    if (watchService) {
+      const service = services.find(s => s.id.toString() === watchService) as Service | undefined;
+      setSelectedService(service || null);
+      form.setValue("servicePackage", "");
+      form.setValue("styleSize", "");
+      setSelectedPackage(null);
+      setBasePrice("0");
+      setTotalPrice(0);
+    }
+  }, [watchService, form]);
+  
+  // Update selected package when package name changes
+  useEffect(() => {
+    if (watchPackage && selectedService) {
+      const packageItem = selectedService.packages.find((p: ServicePackage) => p.name === watchPackage);
+      setSelectedPackage(packageItem || null);
+      form.setValue("styleSize", "");
+    }
+  }, [watchPackage, selectedService, form]);
+  
+  // Calculate price
+  useEffect(() => {
+    if (!selectedPackage || !watchStyleSize) {
+      setTotalPrice(0);
+      return;
+    }
+    
+    try {
+      // Parse size price
+      let price = 0;
+      
+      if (watchStyleSize === "small") {
+        price = Number(selectedPackage.price.split("-")[1].replace(/,/g, ""));
+      } else if (watchStyleSize === "medium") {
+        const range = selectedPackage.price.split("-");
+        if (range.length === 2) {
+          price = Number(range[0].replace(/,/g, "")) + 
+            Math.floor((Number(range[1].replace(/,/g, "")) - Number(range[0].replace(/,/g, ""))) / 2);
+        } else {
+          price = Number(selectedPackage.price.replace(/,/g, ""));
+        }
+      } else if (watchStyleSize === "large") {
+        price = Number(selectedPackage.price.split("-")[0].replace(/,/g, ""));
+      }
+      
+      // Add home service fee if selected
+      if (watchLocation === "home") {
+        price += 200;
+      }
+      
+      // Add extra length fee if selected
+      if (watchAdditionalLength) {
+        price += 100;
+      }
+      
+      setTotalPrice(price);
+      setBasePrice(selectedPackage.price);
+    } catch (error) {
+      console.error("Error calculating price:", error);
+      setTotalPrice(0);
+    }
+  }, [selectedPackage, watchStyleSize, watchLocation, watchAdditionalLength]);
   
   // Booking submission
   const bookingMutation = useMutation({
     mutationFn: async (data: BookingForm) => {
-      return await apiRequest('POST', '/api/bookings', data);
+      const bookingData = {
+        ...data,
+        finalPrice: totalPrice
+      };
+      return await apiRequest('POST', '/api/bookings', bookingData);
     },
     onSuccess: () => {
       toast({
@@ -123,6 +246,189 @@ export default function BookingForm({ availableTimes, availableDates, loadingTim
               </FormItem>
             )}
           />
+          
+          {selectedService && (
+            <FormField
+              control={form.control}
+              name="servicePackage"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Select Style *</FormLabel>
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Choose a style" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {selectedService.packages.map((pkg: ServicePackage) => (
+                        <SelectItem key={pkg.name} value={pkg.name}>
+                          {pkg.name} ({pkg.price} KSH)
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          )}
+          
+          {selectedPackage && (
+            <FormField
+              control={form.control}
+              name="styleSize"
+              render={({ field }) => (
+                <FormItem className="space-y-3">
+                  <FormLabel>Select Size *</FormLabel>
+                  <FormControl>
+                    <RadioGroup
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                      className="flex flex-col space-y-1"
+                    >
+                      <FormItem className="flex items-center space-x-3 space-y-0">
+                        <FormControl>
+                          <RadioGroupItem value="large" />
+                        </FormControl>
+                        <FormLabel className="font-normal">
+                          Large
+                        </FormLabel>
+                      </FormItem>
+                      <FormItem className="flex items-center space-x-3 space-y-0">
+                        <FormControl>
+                          <RadioGroupItem value="medium" />
+                        </FormControl>
+                        <FormLabel className="font-normal">
+                          Medium
+                        </FormLabel>
+                      </FormItem>
+                      <FormItem className="flex items-center space-x-3 space-y-0">
+                        <FormControl>
+                          <RadioGroupItem value="small" />
+                        </FormControl>
+                        <FormLabel className="font-normal">
+                          Small
+                        </FormLabel>
+                      </FormItem>
+                    </RadioGroup>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          )}
+          
+          {selectedPackage && watchStyleSize && (
+            <>
+              <FormField
+                control={form.control}
+                name="location"
+                render={({ field }) => (
+                  <FormItem className="space-y-3">
+                    <FormLabel>Service Location *</FormLabel>
+                    <FormControl>
+                      <RadioGroup
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                        className="flex flex-col space-y-1"
+                      >
+                        <FormItem className="flex items-center space-x-3 space-y-0">
+                          <FormControl>
+                            <RadioGroupItem value="salon" />
+                          </FormControl>
+                          <FormLabel className="font-normal">
+                            At salon
+                          </FormLabel>
+                        </FormItem>
+                        <FormItem className="flex items-center space-x-3 space-y-0">
+                          <FormControl>
+                            <RadioGroupItem value="home" />
+                          </FormControl>
+                          <FormLabel className="font-normal">
+                            Home service (+200 KSH)
+                          </FormLabel>
+                        </FormItem>
+                      </RadioGroup>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              
+              <FormField
+                control={form.control}
+                name="additionalLength"
+                render={({ field }) => (
+                  <FormItem className="flex flex-row items-start space-x-2 space-y-0">
+                    <FormControl>
+                      <Checkbox
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                      />
+                    </FormControl>
+                    <div className="space-y-1 leading-none">
+                      <FormLabel>
+                        Additional length/extensions (+100 KSH)
+                      </FormLabel>
+                    </div>
+                  </FormItem>
+                )}
+              />
+              
+              <Card className="bg-primary/5 border-primary/20">
+                <CardHeader>
+                  <CardTitle className="text-lg flex justify-between">
+                    <span>Price Summary</span>
+                    <span>{totalPrice} KSH</span>
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-2 text-sm">
+                  <div className="flex justify-between">
+                    <span>Base Price ({watchStyleSize} size):</span>
+                    <span>{basePrice} KSH</span>
+                  </div>
+                  {watchLocation === "home" && (
+                    <div className="flex justify-between">
+                      <span>Home Service Fee:</span>
+                      <span>+200 KSH</span>
+                    </div>
+                  )}
+                  {watchAdditionalLength && (
+                    <div className="flex justify-between">
+                      <span>Additional Length:</span>
+                      <span>+100 KSH</span>
+                    </div>
+                  )}
+                  <div className="border-t pt-2 font-medium flex justify-between">
+                    <span>Total:</span>
+                    <span>{totalPrice} KSH</span>
+                  </div>
+                </CardContent>
+              </Card>
+              
+              <FormField
+                control={form.control}
+                name="priceAcknowledged"
+                render={({ field }) => (
+                  <FormItem className="flex flex-row items-start space-x-2 space-y-0">
+                    <FormControl>
+                      <Checkbox
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                      />
+                    </FormControl>
+                    <div className="space-y-1 leading-none">
+                      <FormLabel>
+                        I acknowledge and agree to the total price of {totalPrice} KSH
+                      </FormLabel>
+                      <FormMessage />
+                    </div>
+                  </FormItem>
+                )}
+              />
+            </>
+          )}
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <FormField
@@ -265,7 +571,7 @@ export default function BookingForm({ availableTimes, availableDates, loadingTim
                     <button
                       type="button"
                       onClick={() => setPolicyModalOpen(true)}
-                      className="text-[var(--color-amber)] hover:underline font-medium"
+                      className="text-primary hover:underline font-medium"
                     >
                       booking policy
                     </button>{" "}
@@ -279,8 +585,8 @@ export default function BookingForm({ availableTimes, availableDates, loadingTim
           
           <Button 
             type="submit" 
-            className="w-full bg-[var(--color-amber)] hover:bg-[var(--color-amber)]/90 text-white px-6 py-6 text-lg"
-            disabled={bookingMutation.isPending}
+            className="w-full"
+            disabled={bookingMutation.isPending || !totalPrice}
           >
             {bookingMutation.isPending ? "Processing..." : "Secure Your Booking"}
           </Button>
