@@ -4,7 +4,7 @@ export const services = [
     id: 1,
     title: "Hair Braiding",
     description: "Intricate styles woven with precision and care",
-    image: "https://images.unsplash.com/photo-1619451683237-2c2c4f74f01a?q=80&w=1974&auto=format&fit=crop",
+    image: "/assets/uploads/IMG-20250329-WA0010.jpg",
     longDescription: "Experience luxury hair braiding with Beautify by Angel. Our skilled team creates stunning, long-lasting braided styles that showcase your personality while protecting your natural hair. From box braids to Ghana braids, we customize every style to your preferences.",
     expectationsList: [
       "A personalized consultation to discuss your preferred style",
@@ -57,12 +57,11 @@ export const services = [
       }
     ],
     galleryImages: [
-      "https://images.unsplash.com/photo-1594359278645-73267138d18a?q=80&w=1974&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1594359278756-ecb7889a9fde?q=80&w=1974&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1599140613591-045a1f933a1b?q=80&w=1974&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1597634285596-01fd1ee5fd55?q=80&w=1974&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1600950207944-0d63e8edbc3f?q=80&w=1974&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1596635641354-7a661c4fb0c1?q=80&w=1974&auto=format&fit=crop"
+      "/assets/uploads/IMG-20250329-WA0010.jpg",
+      "/assets/uploads/IMG-20250329-WA0011.jpg",
+      "/assets/uploads/IMG-20250329-WA0012.jpg",
+      "/assets/uploads/IMG-20250329-WA0013.jpg",
+      "/assets/uploads/IMG-20250329-WA0014.jpg"
     ]
   },
   {
@@ -205,7 +204,7 @@ export const services = [
     id: 4,
     title: "Henna Artistry",
     description: "Traditional and contemporary designs for special occasions",
-    image: "https://images.unsplash.com/photo-1583083527882-4bee9aba2eea?q=80&w=1915&auto=format&fit=crop",
+    image: "/assets/uploads/IMG-20250328-WA0153.jpg",
     longDescription: "Our henna artistry service blends ancient traditions with contemporary designs to create stunning temporary body art. Using only the highest quality natural henna, our artists create intricate patterns that celebrate your special occasions or simply add beauty to everyday life.",
     expectationsList: [
       "Design consultation to choose your perfect pattern",
@@ -263,12 +262,13 @@ export const services = [
       }
     ],
     galleryImages: [
-      "https://images.unsplash.com/photo-1577904572853-27802ef4ced9?q=80&w=1974&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1595541852172-05ef57239d7e?q=80&w=1974&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1579315429815-0623e6135595?q=80&w=1974&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1595229601164-02ceb55626e3?q=80&w=1974&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1631979858252-3c4da6706cc9?q=80&w=1974&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1561144257-e32e8efc6c1f?q=80&w=1974&auto=format&fit=crop"
+      "/assets/uploads/IMG-20250328-WA0153.jpg",
+      "/assets/uploads/IMG-20250328-WA0154.jpg",
+      "/assets/uploads/IMG-20250328-WA0155.jpg",
+      "/assets/uploads/IMG-20250328-WA0156.jpg",
+      "/assets/uploads/IMG-20250328-WA0157.jpg",
+      "/assets/uploads/IMG-20250328-WA0158.jpg",
+      "/assets/uploads/IMG-20250328-WA0159.jpg"
     ]
   }
 ];

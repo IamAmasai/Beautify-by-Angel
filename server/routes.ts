@@ -1,4 +1,4 @@
-import type { Express } from "express";
+import express, { type Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { z } from "zod";
@@ -13,6 +13,8 @@ import MemoryStore from "memorystore";
 const SessionStore = MemoryStore(session);
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Serve uploaded assets
+  app.use('/assets/uploads', express.static('public/assets/uploads'));
   // Configure session middleware
   app.use(session({
     secret: process.env.SESSION_SECRET || 'beautify-by-angel-secret',
