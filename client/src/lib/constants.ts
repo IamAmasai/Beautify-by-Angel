@@ -4,7 +4,7 @@ export const services = [
     id: 1,
     title: "Hair Braiding",
     description: "Intricate styles woven with precision and care",
-    image: "/assets/uploads/IMG-20250329-WA0010.jpg",
+    image: "/assets/uploads/hairstyle.jpg",
     longDescription: "Experience luxury hair braiding with Beautify by Angel. Our skilled team creates stunning, long-lasting braided styles that showcase your personality while protecting your natural hair. From knotless braids to twists, we customize every style to your preferences.",
     expectationsList: [
       "A personalized consultation to discuss your preferred style",
@@ -78,7 +78,7 @@ export const services = [
     id: 2,
     title: "Makeup Artistry",
     description: "Enhancing your natural beauty with expert application",
-    image: "/assets/uploads/IMG-20250328-WA0160.jpg",
+    image: "/assets/uploads/makeup.jpg",
     longDescription: "Our makeup artistry service transforms your look while enhancing your natural beauty. Using premium products and techniques tailored to your skin tone and preferences, our expert artists create flawless makeup looks for any occasion, from natural day looks to glamorous evening styles.",
     expectationsList: [
       "Personalized consultation to understand your desired look",
@@ -146,7 +146,7 @@ export const services = [
     id: 3,
     title: "Nail Artistry",
     description: "Creative designs and flawless finishes for your hands",
-    image: "/assets/uploads/IMG-20250328-WA0161.jpg",
+    image: "/assets/uploads/nails.jpg",
     longDescription: "Our nail artistry services combine creativity and precision to give you beautiful, long-lasting nail designs. From classic manicures to intricate nail art, we use premium products and innovative techniques to ensure your nails look perfect and stay strong.",
     expectationsList: [
       "Nail health assessment and care recommendations",
@@ -212,7 +212,7 @@ export const services = [
     id: 4,
     title: "Henna Artistry",
     description: "Traditional and contemporary designs for special occasions",
-    image: "/assets/uploads/IMG-20250328-WA0153.jpg",
+    image: "/assets/uploads/henna.jpg",
     longDescription: "Our henna artistry service blends ancient traditions with contemporary designs to create stunning temporary body art. Using only the highest quality natural henna, our artists create intricate patterns that celebrate your special occasions or simply add beauty to everyday life.",
     expectationsList: [
       "Design consultation to choose your perfect pattern",
