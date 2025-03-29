@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Link } from "wouter";
+import angelImage from "@assets/angel.jpg";
 
 export default function AboutPage() {
   return (
@@ -24,7 +25,7 @@ export default function AboutPage() {
               transition={{ duration: 0.5 }}
             >
               <img 
-                src="https://images.unsplash.com/photo-1607006279701-be5fbe8d9e94?q=80&w=1941&auto=format&fit=crop" 
+                src={angelImage} 
                 alt="Angel Mwende - CEO of Beautify by Angel" 
                 className="rounded-lg shadow-xl w-full h-auto"
               />
