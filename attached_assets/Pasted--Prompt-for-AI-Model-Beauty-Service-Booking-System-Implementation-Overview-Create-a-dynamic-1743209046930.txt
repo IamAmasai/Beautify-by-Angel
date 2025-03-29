@@ -1,0 +1,69 @@
+# Prompt for AI Model: Beauty Service Booking System Implementation
+
+## Overview
+Create a dynamic booking system for a beauty salon offering multiple services including hair braiding, henna, nails, and makeup. The system should calculate prices in real-time based on client selections and display a clear summary before booking confirmation.
+
+## Detailed Requirements
+
+### General Booking Flow
+1. Client selects initial service category (hair braiding, henna, nails, or makeup)
+2. System displays base price for selected service (e.g., 1000 KSh for hair braiding)
+3. Client is presented with a form to customize their service
+4. As client makes selections, the total price updates automatically and remains visible
+5. At the bottom of the form, display a red message stating: "Booking confirms acceptance of prices and policy"
+6. Client completes booking by clicking "Book Now" button
+
+### Hair Braiding Service Options
+- Base price: 1000 KSh (or as set in the system)
+- Location option:
+  - In-salon (no additional cost)
+  - Home service (+200 KSh)
+- Braid materials option:
+  - Client provides own braids (no additional cost)
+  - Purchase braids from salon (70 KSh per braid)
+    - Include quantity selector (e.g., dropdown or number input)
+    - Automatically calculate and add cost based on quantity selected
+
+### Additional Service Categories
+Implement similar customization forms for:
+- Henna designs
+- Nail services
+- Makeup application
+
+Each service should:
+- Display appropriate base price
+- Offer home service option (+200 KSh)
+- Include service-specific customizations
+- Calculate and display running total
+
+### Price Calculation Logic
+- Start with base price from selected package
+- Add 200 KSh if home service is selected
+- For hair braiding with salon-provided materials: add (70 KSh × number of braids)
+- Add costs of any other selected options
+- Display running total prominently throughout the selection process
+
+### User Interface Elements
+- Clear service category selection buttons/cards
+- Toggle switches for binary options (home/salon, own/our braids)
+- Numeric input for braid quantity (if applicable)
+- Real-time price calculator with visible running total
+- Red confirmation message: "Booking confirms acceptance of prices and policy"
+- Prominent "Book Now" button
+- Confirmation screen after successful booking
+
+### Owner's Availability Management
+- Create an admin panel where the owner can:
+  - Set available and unavailable time slots
+  - Block off certain days/times
+  - View and manage bookings
+- Ensure time slots are synchronized in real-time
+- Prevent double-booking by marking booked slots as unavailable to other clients
+
+## Implementation Notes
+- Use real-time validation for all form inputs
+- Ensure all pricing calculations happen client-side for immediate feedback
+- Implement responsive design for mobile and desktop users
+- Use clear visual indicators when prices change
+- Store booking data securely in the database
+- Send confirmation notifications to both client and salon owner

@@ -97,6 +97,7 @@ export default function BookingForm({ availableTimes, availableDates, loadingTim
   const [selectedPackage, setSelectedPackage] = useState<ServicePackage | null>(null);
   const [basePrice, setBasePrice] = useState<string>("0");
   const [totalPrice, setTotalPrice] = useState<number>(0);
+  const [showFloatingPrice, setShowFloatingPrice] = useState(false);
   
   // Form setup
   const form = useForm<BookingForm>({
@@ -203,6 +204,20 @@ export default function BookingForm({ availableTimes, availableDates, loadingTim
     }
   }, [selectedPackage, watchStyleSize, watchLocation, watchAdditionalLength, watchBraidSource, watchBraidQuantity, watchService, selectedService]);
   
+  // Track scroll to show floating price
+  useEffect(() => {
+    const handleScroll = () => {
+      if (totalPrice > 0) {
+        setShowFloatingPrice(window.scrollY > 300);
+      } else {
+        setShowFloatingPrice(false);
+      }
+    };
+    
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [totalPrice]);
+  
   // Booking submission
   const bookingMutation = useMutation({
     mutationFn: async (data: BookingForm) => {
@@ -236,6 +251,28 @@ export default function BookingForm({ availableTimes, availableDates, loadingTim
 
   return (
     <>
+      {/* Floating price bar that appears when scrolling */}
+      {showFloatingPrice && totalPrice > 0 && (
+        <div className="fixed bottom-0 left-0 right-0 bg-white shadow-lg border-t border-primary/20 p-4 flex justify-between items-center z-50">
+          <div className="flex flex-col">
+            <span className="text-sm font-medium">Total Price:</span>
+            <span className="text-lg font-bold text-primary">{totalPrice} KSH</span>
+          </div>
+          <Button 
+            type="button"
+            className="w-auto"
+            onClick={() => {
+              const submitBtn = document.querySelector('button[type="submit"]');
+              if (submitBtn) {
+                submitBtn.scrollIntoView({ behavior: 'smooth' });
+              }
+            }}
+          >
+            Book Now
+          </Button>
+        </div>
+      )}
+    
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <FormField
@@ -529,6 +566,11 @@ export default function BookingForm({ availableTimes, availableDates, loadingTim
                   </FormItem>
                 )}
               />
+              
+              {/* Red confirmation message about booking policy */}
+              <div className="text-red-500 text-sm font-medium mt-2">
+                Booking confirms acceptance of prices and policy
+              </div>
             </>
           )}
           
@@ -690,7 +732,7 @@ export default function BookingForm({ availableTimes, availableDates, loadingTim
             className="w-full"
             disabled={bookingMutation.isPending || !totalPrice}
           >
-            {bookingMutation.isPending ? "Processing..." : "Secure Your Booking"}
+            {bookingMutation.isPending ? "Processing..." : "Book Now"}
           </Button>
         </form>
       </Form>
