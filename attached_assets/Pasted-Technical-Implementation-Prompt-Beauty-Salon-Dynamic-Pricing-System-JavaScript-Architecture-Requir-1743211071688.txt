@@ -1,0 +1,162 @@
+Technical Implementation Prompt: Beauty Salon Dynamic Pricing System
+JavaScript Architecture Requirements
+1. Core Modules Structure
+Create separate modules for:
+Price Calculator Engine
+Form Event Handler
+DOM Manipulator
+Validation Service
+State Manager
+2. State Management
+Implement a central state manager that:
+
+Maintains current booking state
+Tracks selected services
+Manages price calculations
+Handles form data
+Updates UI components
+3. Event Handling System
+Design event listeners for:
+
+Service selection changes
+Quantity adjustments
+Location toggles
+Material selections
+Form input changes
+4. Price Calculation Engine
+Create a calculation service that:
+
+Uses pure functions for price computations
+Implements observer pattern for price updates
+Maintains price history
+Handles decimal precision
+Supports multiple currency formats
+5. Data Models
+Service Model
+CopyInsert
+ServiceModel {
+  - id
+  - name
+  - basePrice
+  - availableOptions
+  - customizations
+  - locationPricing
+}
+Pricing Model
+CopyInsert
+PricingModel {
+  - baseAmount
+  - additionalCosts
+  - locationSurcharge
+  - materialCosts
+  - quantityMultipliers
+}
+Booking State Model
+CopyInsert
+BookingState {
+  - selectedService
+  - currentOptions
+  - quantities
+  - location
+  - materialChoices
+  - totalPrice
+}
+6. DOM Interaction Layer
+UI Update Strategy
+Implement debouncing for frequent updates
+Use RAF (RequestAnimationFrame) for smooth animations
+Create virtual DOM for price display updates
+Maintain UI consistency during updates
+Event Delegation
+Centralize event handling
+Optimize event listener attachment
+Implement event bubbling strategy
+Handle dynamic content updates
+7. Validation Framework
+Input Validation
+Real-time input validation
+Numeric constraints
+Range validation
+Format verification
+Error state management
+Business Rules Validation
+Service availability checks
+Price range validation
+Quantity limits
+Time slot validation
+Location restrictions
+8. Performance Optimization
+Computation Optimization
+Memoize frequent calculations
+Cache service prices
+Optimize loops and iterations
+Implement lazy loading
+Use efficient data structures
+Memory Management
+Clear unused event listeners
+Implement garbage collection
+Optimize DOM references
+Manage state cleanup
+9. Error Handling System
+Error Types
+ValidationError
+CalculationError
+StateError
+NetworkError
+InputError
+Error Recovery
+Graceful degradation
+State rollback
+User feedback
+Error logging
+Recovery strategies
+10. Testing Requirements
+Unit Tests
+Price calculation functions
+State management
+Event handlers
+Validation rules
+Data models
+Integration Tests
+Form submissions
+Price updates
+State changes
+UI interactions
+Error scenarios
+11. Browser Compatibility
+Support Matrix
+Modern browsers (last 2 versions)
+Mobile browsers
+Progressive enhancement
+Fallback strategies
+Polyfill implementation
+12. Security Considerations
+Input Sanitization
+XSS prevention
+Input validation
+Data sanitization
+Output encoding
+CSRF protection
+13. Accessibility Requirements
+ARIA Implementation
+Role attributes
+State notifications
+Focus management
+Keyboard navigation
+Screen reader support
+14. Documentation Requirements
+Code Documentation
+JSDoc comments
+Function documentation
+Module documentation
+State flow diagrams
+API documentation
+User Documentation
+Setup instructions
+Configuration guide
+Troubleshooting guide
+API reference
+Usage examples
+This technical prompt provides a comprehensive framework for implementing the dynamic pricing system using modern JavaScript practices while ensuring maintainability, performance, and user experience.
+
+DoneFeedback has been submi

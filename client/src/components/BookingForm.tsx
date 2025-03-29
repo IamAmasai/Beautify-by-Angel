@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -16,6 +16,9 @@ import { services } from "@/lib/constants";
 import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import PolicyModal from "@/components/PolicyModal";
+import PriceSummary from "@/components/PriceSummary";
+import FloatingBookButton from "@/components/FloatingBookButton";
+import { calculatePrice, PriceBreakdown, PricingOptions, formatPrice } from "@/lib/priceCalculator";
 
 // Define types for service data
 interface ServicePackage {
@@ -95,9 +98,15 @@ export default function BookingForm({ availableTimes, availableDates, loadingTim
   const [policyModalOpen, setPolicyModalOpen] = useState(false);
   const [selectedService, setSelectedService] = useState<Service | null>(null);
   const [selectedPackage, setSelectedPackage] = useState<ServicePackage | null>(null);
-  const [basePrice, setBasePrice] = useState<string>("0");
-  const [totalPrice, setTotalPrice] = useState<number>(0);
-  const [showFloatingPrice, setShowFloatingPrice] = useState(false);
+  const [priceBreakdown, setPriceBreakdown] = useState<PriceBreakdown>({
+    basePrice: 0,
+    homeServiceFee: 0,
+    materialsCost: 0,
+    lengthSurcharge: 0,
+    totalPrice: 0,
+    items: [{ name: "Base Price", price: 0 }]
+  });
+  const submitRef = useRef<HTMLButtonElement>(null);
   
   // Form setup
   const form = useForm<BookingForm>({
@@ -138,8 +147,16 @@ export default function BookingForm({ availableTimes, availableDates, loadingTim
       form.setValue("servicePackage", "");
       form.setValue("styleSize", "");
       setSelectedPackage(null);
-      setBasePrice("0");
-      setTotalPrice(0);
+      
+      // Reset price breakdown
+      setPriceBreakdown({
+        basePrice: 0,
+        homeServiceFee: 0,
+        materialsCost: 0,
+        lengthSurcharge: 0,
+        totalPrice: 0,
+        items: [{ name: "Base Price", price: 0 }]
+      });
     }
   }, [watchService, form]);
   
@@ -155,75 +172,66 @@ export default function BookingForm({ availableTimes, availableDates, loadingTim
   // Calculate price
   useEffect(() => {
     if (!selectedPackage || !watchStyleSize) {
-      setTotalPrice(0);
       return;
     }
     
     try {
-      // Parse size price
-      let price = 0;
+      // Parse base price from package
+      let basePrice = 0;
       
       if (watchStyleSize === "small") {
-        price = Number(selectedPackage.price.split("-")[1].replace(/,/g, ""));
+        const parts = selectedPackage.price.split("-");
+        basePrice = Number(parts.length > 1 ? parts[1].replace(/,/g, "") : parts[0].replace(/,/g, ""));
       } else if (watchStyleSize === "medium") {
         const range = selectedPackage.price.split("-");
         if (range.length === 2) {
-          price = Number(range[0].replace(/,/g, "")) + 
+          basePrice = Number(range[0].replace(/,/g, "")) + 
             Math.floor((Number(range[1].replace(/,/g, "")) - Number(range[0].replace(/,/g, ""))) / 2);
         } else {
-          price = Number(selectedPackage.price.replace(/,/g, ""));
+          basePrice = Number(selectedPackage.price.replace(/,/g, ""));
         }
       } else if (watchStyleSize === "large") {
-        price = Number(selectedPackage.price.split("-")[0].replace(/,/g, ""));
+        basePrice = Number(selectedPackage.price.split("-")[0].replace(/,/g, ""));
       }
       
-      // Add home service fee if selected
-      if (watchLocation === "home") {
-        price += 200;
-      }
+      // Get quantity for materials (if brads)
+      const braidQuantity = parseInt(watchBraidQuantity || "0") || 0;
       
-      // Add extra length fee if selected
-      if (watchAdditionalLength) {
-        price += 100;
-      }
+      // Create pricing options
+      const pricingOptions: PricingOptions = {
+        serviceId: selectedService ? selectedService.id : 0,
+        basePrice: basePrice,
+        isHomeService: watchLocation === "home",
+        useOwnMaterials: watchBraidSource === "own",
+        materialQuantity: braidQuantity,
+        extraLength: watchAdditionalLength,
+        selectedPackage: watchPackage,
+        packagePrice: basePrice
+      };
       
-      // Add braid cost if salon provides braids - 70 KSH per braid
-      if (watchService && selectedService && selectedService.title.toLowerCase().includes("braid") && 
-          watchBraidSource === "salon" && watchBraidQuantity) {
-        const braidQuantity = parseInt(watchBraidQuantity) || 0;
-        if (braidQuantity > 0) {
-          price += braidQuantity * 70; // 70 KSH per braid
-        }
-      }
-      
-      setTotalPrice(price);
-      setBasePrice(selectedPackage.price);
+      // Calculate price breakdown
+      const breakdown = calculatePrice(pricingOptions);
+      setPriceBreakdown(breakdown);
     } catch (error) {
       console.error("Error calculating price:", error);
-      setTotalPrice(0);
+      // Reset to default breakdown on error
+      setPriceBreakdown({
+        basePrice: 0,
+        homeServiceFee: 0,
+        materialsCost: 0,
+        lengthSurcharge: 0,
+        totalPrice: 0,
+        items: [{ name: "Base Price", price: 0 }]
+      });
     }
-  }, [selectedPackage, watchStyleSize, watchLocation, watchAdditionalLength, watchBraidSource, watchBraidQuantity, watchService, selectedService]);
-  
-  // Track scroll to show floating price
-  useEffect(() => {
-    const handleScroll = () => {
-      if (totalPrice > 0) {
-        setShowFloatingPrice(window.scrollY > 300);
-      } else {
-        setShowFloatingPrice(false);
-      }
-    };
-    
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [totalPrice]);
-  
+  }, [selectedService, selectedPackage, watchStyleSize, watchLocation, watchAdditionalLength, watchBraidSource, watchBraidQuantity]);
+
   // Booking submission
   const bookingMutation = useMutation({
     mutationFn: async (data: BookingForm) => {
       const bookingData = {
         ...data,
-        finalPrice: totalPrice
+        finalPrice: priceBreakdown.totalPrice
       };
       return await apiRequest('POST', '/api/bookings', bookingData);
     },
@@ -248,33 +256,26 @@ export default function BookingForm({ availableTimes, availableDates, loadingTim
   function onSubmit(data: BookingForm) {
     bookingMutation.mutate(data);
   }
+  
+  // Handle scroll to booking form
+  function scrollToSubmit() {
+    if (submitRef.current) {
+      submitRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }
 
   return (
     <>
-      {/* Floating price bar that appears when scrolling */}
-      {showFloatingPrice && totalPrice > 0 && (
-        <div className="fixed bottom-0 left-0 right-0 bg-white shadow-lg border-t border-primary/20 p-4 flex justify-between items-center z-50">
-          <div className="flex flex-col">
-            <span className="text-sm font-medium">Total Price:</span>
-            <span className="text-lg font-bold text-primary">{totalPrice} KSH</span>
-          </div>
-          <Button 
-            type="button"
-            className="w-auto"
-            onClick={() => {
-              const submitBtn = document.querySelector('button[type="submit"]');
-              if (submitBtn) {
-                submitBtn.scrollIntoView({ behavior: 'smooth' });
-              }
-            }}
-          >
-            Book Now
-          </Button>
-        </div>
+      {/* Floating Book Now Button */}
+      {priceBreakdown.totalPrice > 0 && (
+        <FloatingBookButton 
+          price={priceBreakdown.totalPrice} 
+          onClick={scrollToSubmit} 
+        />
       )}
     
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 md:grid md:grid-cols-3 md:gap-8 md:space-y-0">
           <FormField
             control={form.control}
             name="service"
@@ -508,43 +509,9 @@ export default function BookingForm({ availableTimes, availableDates, loadingTim
                 </>
               )}
               
-              <Card className="bg-primary/5 border-primary/20">
-                <CardHeader>
-                  <CardTitle className="text-lg flex justify-between">
-                    <span>Price Summary</span>
-                    <span>{totalPrice} KSH</span>
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-2 text-sm">
-                  <div className="flex justify-between">
-                    <span>Base Price ({watchStyleSize} size):</span>
-                    <span>{basePrice} KSH</span>
-                  </div>
-                  {watchLocation === "home" && (
-                    <div className="flex justify-between">
-                      <span>Home Service Fee:</span>
-                      <span>+200 KSH</span>
-                    </div>
-                  )}
-                  {watchAdditionalLength && (
-                    <div className="flex justify-between">
-                      <span>Additional Length:</span>
-                      <span>+100 KSH</span>
-                    </div>
-                  )}
-                  {selectedService && selectedService.title.toLowerCase().includes("braid") && 
-                  watchBraidSource === "salon" && watchBraidQuantity && parseInt(watchBraidQuantity) > 0 && (
-                    <div className="flex justify-between">
-                      <span>Braids ({watchBraidQuantity} @ 70 KSH each):</span>
-                      <span>+{parseInt(watchBraidQuantity) * 70} KSH</span>
-                    </div>
-                  )}
-                  <div className="border-t pt-2 font-medium flex justify-between">
-                    <span>Total:</span>
-                    <span>{totalPrice} KSH</span>
-                  </div>
-                </CardContent>
-              </Card>
+              <div className="col-span-1 md:col-span-3">
+                <PriceSummary priceBreakdown={priceBreakdown} className="w-full" />
+              </div>
               
               <FormField
                 control={form.control}
@@ -559,7 +526,7 @@ export default function BookingForm({ availableTimes, availableDates, loadingTim
                     </FormControl>
                     <div className="space-y-1 leading-none">
                       <FormLabel>
-                        I acknowledge and agree to the total price of {totalPrice} KSH
+                        I acknowledge and agree to the total price of {formatPrice(priceBreakdown.totalPrice)}
                       </FormLabel>
                       <FormMessage />
                     </div>
@@ -730,7 +697,8 @@ export default function BookingForm({ availableTimes, availableDates, loadingTim
           <Button 
             type="submit" 
             className="w-full"
-            disabled={bookingMutation.isPending || !totalPrice}
+            disabled={bookingMutation.isPending || priceBreakdown.totalPrice <= 0}
+            ref={submitRef}
           >
             {bookingMutation.isPending ? "Processing..." : "Book Now"}
           </Button>
