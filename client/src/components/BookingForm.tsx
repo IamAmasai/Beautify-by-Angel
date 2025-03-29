@@ -392,38 +392,46 @@ export default function BookingForm({ availableTimes, availableDates, loadingTim
                 )}
               />
               
-              {/* Braids options - only show for braiding services */}
+              {/* Braids options - integrated into the main flow only for braiding services */}
               {selectedService && selectedService.title.toLowerCase().includes("braid") && (
-                <div className="space-y-4 border rounded-md p-4 bg-primary/5">
-                  <h3 className="font-medium">Braids Options</h3>
-                  
+                <>
                   <FormField
                     control={form.control}
                     name="braidSource"
                     render={({ field }) => (
                       <FormItem className="space-y-3">
-                        <FormLabel>Braids Source</FormLabel>
+                        <FormLabel>Braids Source *</FormLabel>
                         <FormControl>
                           <RadioGroup
                             onValueChange={field.onChange}
                             defaultValue={field.value}
                             className="flex flex-col space-y-1"
                           >
-                            <FormItem className="flex items-center space-x-3 space-y-0">
+                            <FormItem className="flex items-center space-x-3 space-y-0 p-3 rounded-md border border-muted hover:bg-muted/5 transition-colors">
                               <FormControl>
                                 <RadioGroupItem value="own" />
                               </FormControl>
-                              <FormLabel className="font-normal">
-                                I'll bring my own braids
-                              </FormLabel>
+                              <div>
+                                <FormLabel className="font-medium block">
+                                  I'll bring my own braids
+                                </FormLabel>
+                                <span className="text-xs text-muted-foreground">
+                                  You'll need to bring all necessary braids for your style
+                                </span>
+                              </div>
                             </FormItem>
-                            <FormItem className="flex items-center space-x-3 space-y-0">
+                            <FormItem className="flex items-center space-x-3 space-y-0 p-3 rounded-md border border-muted hover:bg-muted/5 transition-colors">
                               <FormControl>
                                 <RadioGroupItem value="salon" />
                               </FormControl>
-                              <FormLabel className="font-normal">
-                                Purchase braids from salon (70 KSH per braid)
-                              </FormLabel>
+                              <div>
+                                <FormLabel className="font-medium block">
+                                  Purchase braids from salon
+                                </FormLabel>
+                                <span className="text-xs text-muted-foreground">
+                                  70 KSH per braid, added to your total
+                                </span>
+                              </div>
                             </FormItem>
                           </RadioGroup>
                         </FormControl>
@@ -438,7 +446,7 @@ export default function BookingForm({ availableTimes, availableDates, loadingTim
                       name="braidQuantity"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Number of Braids Needed</FormLabel>
+                          <FormLabel>Number of Braids Needed *</FormLabel>
                           <FormControl>
                             <Input 
                               type="number" 
@@ -452,15 +460,15 @@ export default function BookingForm({ availableTimes, availableDates, loadingTim
                               }}
                             />
                           </FormControl>
-                          <FormDescription>
-                            Enter the quantity of braids you need (70 KSH per braid)
-                          </FormDescription>
+                          <div className="text-xs text-muted-foreground mt-1">
+                            Specify how many braids you need (@ 70 KSH each)
+                          </div>
                           <FormMessage />
                         </FormItem>
                       )}
                     />
                   )}
-                </div>
+                </>
               )}
               
               <Card className="bg-primary/5 border-primary/20">
