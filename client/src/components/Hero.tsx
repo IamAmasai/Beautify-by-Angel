@@ -39,13 +39,13 @@ export default function Hero() {
           transition={{ duration: 0.5, delay: 0.4 }}
         >
           <Link href="/booking">
-            <motion.a 
+            <motion.div 
               className="inline-block bg-[var(--color-amber)] text-white text-lg px-8 py-3 rounded shadow-lg hover:bg-opacity-90 transition"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
               Book Your Experience
-            </motion.a>
+            </motion.div>
           </Link>
         </motion.div>
       </div>
