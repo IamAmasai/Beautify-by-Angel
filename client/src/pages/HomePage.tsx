@@ -5,6 +5,7 @@ import ServiceCard from "@/components/ServiceCard";
 import TestimonialCarousel from "@/components/TestimonialCarousel";
 import { Link } from "wouter";
 import { services } from "@/lib/constants";
+import angelImage from "@assets/angel.jpg";
 
 export default function HomePage() {
   return (
@@ -37,7 +38,7 @@ export default function HomePage() {
           <div className="flex flex-col md:flex-row items-center gap-12">
             <div className="md:w-1/2">
               <img 
-                src="https://images.unsplash.com/photo-1607006279701-be5fbe8d9e94?q=80&w=1941&auto=format&fit=crop" 
+                src={angelImage} 
                 alt="Angel Mwende - CEO of Beautify by Angel" 
                 className="rounded-lg shadow-xl w-full h-auto object-cover"
               />

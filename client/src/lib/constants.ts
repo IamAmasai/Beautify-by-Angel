@@ -13,7 +13,7 @@ export const services = [
       "Detailed aftercare instructions to maintain your style",
       "Comfortable, relaxing experience throughout the service"
     ],
-    startingPrice: "150",
+    startingPrice: "1,000",
     duration: "1-6 hours",
     priceImage: "/assets/uploads/price-1.jpg",
     packages: [
