@@ -12,6 +12,7 @@ export interface IStorage {
   getUser(id: number): Promise<User | undefined>;
   getUserByUsername(username: string): Promise<User | undefined>;
   createUser(user: InsertUser): Promise<User>;
+  getAllUsers(): Promise<User[]>;
   
   // Service methods
   getAllServices(): Promise<Service[]>;
@@ -67,7 +68,9 @@ export class MemStorage implements IStorage {
     this.createUser({
       username: "angel",
       password: "beautify123", // In a real app, this would be hashed
-      isAdmin: true
+      isAdmin: true,
+      name: "Angel Mwende",
+      email: "angel@beautifybyangel.com"
     });
     
     // Initialize with services from constants
@@ -94,11 +97,23 @@ export class MemStorage implements IStorage {
     );
   }
 
+  async getAllUsers(): Promise<User[]> {
+    return Array.from(this.users.values());
+  }
+
   async createUser(insertUser: InsertUser): Promise<User> {
     const id = this.currentUserId++;
     const now = new Date();
+    
+    // Ensure isAdmin is a boolean
+    const isAdmin = insertUser.isAdmin === undefined ? false : insertUser.isAdmin;
+    // Ensure email is a string or null
+    const email = insertUser.email === undefined ? null : insertUser.email;
+    
     const user: User = { 
-      ...insertUser, 
+      ...insertUser,
+      isAdmin,
+      email, 
       id,
       createdAt: now
     };
@@ -118,8 +133,12 @@ export class MemStorage implements IStorage {
   async createService(insertService: InsertService): Promise<Service> {
     const id = this.currentServiceId++;
     const now = new Date();
+    // Ensure longDescription is a string or null
+    const longDescription = insertService.longDescription === undefined ? null : insertService.longDescription;
+    
     const service: Service = { 
-      ...insertService, 
+      ...insertService,
+      longDescription, 
       id,
       createdAt: now
     };
@@ -166,8 +185,12 @@ export class MemStorage implements IStorage {
   async createBooking(insertBooking: InsertBooking): Promise<Booking> {
     const id = this.currentBookingId++;
     const now = new Date();
+    // Ensure notes is a string or null
+    const notes = insertBooking.notes === undefined ? null : insertBooking.notes;
+    
     const booking: Booking = { 
-      ...insertBooking, 
+      ...insertBooking,
+      notes, 
       id,
       status: 'pending',
       createdAt: now

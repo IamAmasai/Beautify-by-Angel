@@ -1,100 +1,44 @@
-import express, { type Express } from "express";
+import express, { type Express, Request, Response, NextFunction } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { z } from "zod";
 import { ZodError } from "zod";
 import { fromZodError } from "zod-validation-error";
 import { insertBookingSchema, insertContactMessageSchema, insertBlockedTimeSchema } from "../shared/schema";
-import session from "express-session";
-import passport from "passport";
-import { Strategy as LocalStrategy } from "passport-local";
-import MemoryStore from "memorystore";
+import { setupAuth } from "./auth";
 
-const SessionStore = MemoryStore(session);
+// Global error handler helper function
+const handleError = (res: Response, message: string, error: unknown) => {
+  const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+  return res.status(500).json({ message, error: errorMessage });
+};
+
+// Helper to consistently handle unknown errors
+const safeErrorMessage = (error: unknown): string => {
+  return error instanceof Error ? error.message : 'Unknown error';
+};
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Serve uploaded assets
   app.use('/assets/uploads', express.static('public/assets/uploads'));
-  // Configure session middleware
-  app.use(session({
-    secret: process.env.SESSION_SECRET || 'beautify-by-angel-secret',
-    resave: false,
-    saveUninitialized: false,
-    cookie: { secure: process.env.NODE_ENV === 'production', maxAge: 24 * 60 * 60 * 1000 }, // 24 hours
-    store: new SessionStore({
-      checkPeriod: 86400000 // prune expired entries every 24h
-    })
-  }));
-
-  // Configure Passport.js for authentication
-  app.use(passport.initialize());
-  app.use(passport.session());
-
-  passport.use(new LocalStrategy(async (username, password, done) => {
-    try {
-      const user = await storage.getUserByUsername(username);
-      if (!user) {
-        return done(null, false, { message: 'Incorrect username.' });
-      }
-      
-      if (user.password !== password) { // In a real app, use proper password hashing
-        return done(null, false, { message: 'Incorrect password.' });
-      }
-      
-      return done(null, user);
-    } catch (err) {
-      return done(err);
-    }
-  }));
-
-  passport.serializeUser((user: any, done) => {
-    done(null, user.id);
-  });
-
-  passport.deserializeUser(async (id: number, done) => {
-    try {
-      const user = await storage.getUser(id);
-      done(null, user);
-    } catch (err) {
-      done(err);
-    }
-  });
+  
+  // Set up authentication
+  setupAuth(app);
 
   // Middleware to check if user is authenticated and is an admin
-  const isAdmin = (req: any, res: any, next: any) => {
-    if (req.isAuthenticated() && req.user.isAdmin) {
+  const isAdmin = (req: Request, res: Response, next: NextFunction) => {
+    if (req.isAuthenticated() && req.user && req.user.isAdmin) {
       return next();
     }
-    res.status(401).json({ message: 'Unauthorized' });
+    res.status(401).json({ message: 'Unauthorized. Admin access required.' });
   };
-
-  // API Routes
-  
-  // Authentication routes
-  app.post('/api/admin/login', passport.authenticate('local'), (req, res) => {
-    res.json({ message: 'Login successful', user: req.user });
-  });
-
-  app.post('/api/admin/logout', (req: any, res) => {
-    req.logout(() => {
-      res.json({ message: 'Logged out successfully' });
-    });
-  });
-
-  app.get('/api/admin/check-auth', (req, res) => {
-    if (req.isAuthenticated()) {
-      res.json({ authenticated: true, user: req.user });
-    } else {
-      res.json({ authenticated: false });
-    }
-  });
 
   // Services routes
   app.get('/api/services', async (req, res) => {
     try {
       const services = await storage.getAllServices();
       res.json(services);
-    } catch (error) {
+    } catch (error: any) {
       res.status(500).json({ message: 'Error fetching services', error: error.message });
     }
   });
@@ -109,8 +53,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
       
       res.json(service);
-    } catch (error) {
-      res.status(500).json({ message: 'Error fetching service', error: error.message });
+    } catch (error: any) {
+      handleError(res, 'Error fetching service', error);
     }
   });
 
@@ -124,12 +68,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       const booking = await storage.createBooking(data);
       res.status(201).json(booking);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof ZodError) {
         const validationError = fromZodError(error);
         return res.status(400).json({ message: validationError.message });
       }
-      res.status(500).json({ message: 'Error creating booking', error: error.message });
+      handleError(res, 'Error creating booking', error);
     }
   });
 
@@ -152,7 +96,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       res.json(availableDates);
     } catch (error) {
-      res.status(500).json({ message: 'Error fetching available dates', error: error.message });
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      res.status(500).json({ message: 'Error fetching available dates', error: errorMessage });
     }
   });
 
@@ -167,7 +112,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       res.json(availableTimes);
     } catch (error) {
-      res.status(500).json({ message: 'Error fetching available times', error: error.message });
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      res.status(500).json({ message: 'Error fetching available times', error: errorMessage });
     }
   });
 
@@ -177,7 +123,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const bookings = await storage.getAllBookings();
       res.json(bookings);
     } catch (error) {
-      res.status(500).json({ message: 'Error fetching bookings', error: error.message });
+      res.status(500).json({ 
+        message: 'Error fetching bookings', 
+        error: safeErrorMessage(error)
+      });
     }
   });
 

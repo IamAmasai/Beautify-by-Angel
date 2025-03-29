@@ -1,191 +1,60 @@
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import { useToast } from "@/hooks/use-toast";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+import { Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useQuery, useMutation } from "@tanstack/react-query";
-import { apiRequest, queryClient } from "@/lib/queryClient";
 import AdminPanel from "@/components/AdminPanel";
-
-// Form validation schema
-const loginSchema = z.object({
-  username: z.string()
-    .min(1, { message: "Username is required" }),
-  password: z.string()
-    .min(1, { message: "Password is required" }),
-});
-
-type LoginForm = z.infer<typeof loginSchema>;
+import { useAuth } from "@/hooks/use-auth";
+import { Redirect } from "wouter";
 
 export default function AdminPage() {
-  const { toast } = useToast();
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const { user, isLoading, logoutMutation } = useAuth();
   
-  // Check if user is already authenticated
-  const { data: authStatus, isLoading: checkingAuth } = useQuery({
-    queryKey: ['/api/admin/check-auth'],
-    onSuccess: (data) => {
-      if (data && data.authenticated) {
-        setIsAuthenticated(true);
-      }
-    },
-    // Return null if unauthorized instead of throwing
-    queryFn: ({ queryKey }) => fetch(queryKey[0] as string, { credentials: 'include' })
-      .then((res) => {
-        if (res.status === 401) return { authenticated: false };
-        if (!res.ok) throw new Error(`${res.status}: ${res.statusText}`);
-        return res.json();
-      })
-  });
-  
-  // Form setup
-  const form = useForm<LoginForm>({
-    resolver: zodResolver(loginSchema),
-    defaultValues: {
-      username: "",
-      password: "",
-    },
-  });
-  
-  // Login mutation
-  const loginMutation = useMutation({
-    mutationFn: async (data: LoginForm) => {
-      return await apiRequest('POST', '/api/admin/login', data);
-    },
-    onSuccess: () => {
-      setIsAuthenticated(true);
-      queryClient.invalidateQueries({ queryKey: ['/api/admin/check-auth'] });
-      toast({
-        title: "Login Successful",
-        description: "Welcome back, Angel!",
-        variant: "default",
-      });
-    },
-    onError: (error) => {
-      toast({
-        title: "Login Failed",
-        description: error.message || "Invalid username or password",
-        variant: "destructive",
-      });
-    },
-  });
-  
-  // Logout mutation
-  const logoutMutation = useMutation({
-    mutationFn: async () => {
-      return await apiRequest('POST', '/api/admin/logout', {});
-    },
-    onSuccess: () => {
-      setIsAuthenticated(false);
-      queryClient.invalidateQueries({ queryKey: ['/api/admin/check-auth'] });
-      toast({
-        title: "Logged Out",
-        description: "You have been logged out successfully",
-        variant: "default",
-      });
-    },
-  });
-  
-  function onSubmit(data: LoginForm) {
-    loginMutation.mutate(data);
-  }
-  
+  // Handle logout
   function handleLogout() {
     logoutMutation.mutate();
   }
 
-  if (checkingAuth) {
-    return (
-      <div className="min-h-screen pt-24 pb-12 flex justify-center items-start">
-        <Card className="w-full max-w-md">
-          <CardHeader>
-            <CardTitle className="text-2xl text-center">Loading...</CardTitle>
-            <CardDescription className="text-center">
-              Please wait while we verify your credentials
-            </CardDescription>
-          </CardHeader>
-        </Card>
-      </div>
-    );
+  // If not authenticated, redirect to auth page
+  if (!isLoading && !user) {
+    return <Redirect to="/auth" />;
   }
 
-  if (isAuthenticated) {
+  // Show loading state
+  if (isLoading) {
     return (
-      <div className="min-h-screen pt-24 pb-12">
-        <div className="container mx-auto px-4">
-          <div className="flex justify-between items-center mb-8">
-            <h1 className="text-3xl font-bold text-[var(--color-plum)]">Admin Dashboard</h1>
-            <Button 
-              onClick={handleLogout} 
-              variant="outline"
-              className="border-[var(--color-plum)] text-[var(--color-plum)]"
-            >
-              Logout
-            </Button>
-          </div>
-          
-          <AdminPanel />
+      <div className="min-h-screen pt-24 pb-12 flex justify-center items-start">
+        <div className="flex flex-col items-center justify-center">
+          <Loader2 className="h-8 w-8 animate-spin text-primary mb-4" />
+          <h2 className="text-lg font-medium">Loading Dashboard...</h2>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen pt-24 pb-12 flex justify-center items-start">
-      <Card className="w-full max-w-md">
-        <CardHeader>
-          <CardTitle className="text-2xl text-center">Admin Login</CardTitle>
-          <CardDescription className="text-center">
-            Enter your credentials to access the admin panel
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-              <FormField
-                control={form.control}
-                name="username"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Username</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Enter your username" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              
-              <FormField
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Password</FormLabel>
-                    <FormControl>
-                      <Input type="password" placeholder="Enter your password" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              
-              <Button 
-                type="submit" 
-                className="w-full bg-[var(--color-plum)] hover:bg-[var(--color-plum)]/90"
-                disabled={loginMutation.isPending}
-              >
-                {loginMutation.isPending ? "Logging in..." : "Login"}
-              </Button>
-            </form>
-          </Form>
-        </CardContent>
-      </Card>
+    <div className="min-h-screen pt-24 pb-12">
+      <div className="container mx-auto px-4">
+        <div className="flex justify-between items-center mb-8">
+          <div>
+            <h1 className="text-3xl font-bold text-primary">Admin Dashboard</h1>
+            <p className="text-muted-foreground">Welcome, {user?.name}</p>
+          </div>
+          <Button 
+            onClick={handleLogout} 
+            variant="outline"
+            disabled={logoutMutation.isPending}
+          >
+            {logoutMutation.isPending ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Logging out...
+              </>
+            ) : (
+              'Logout'
+            )}
+          </Button>
+        </div>
+        
+        <AdminPanel />
+      </div>
     </div>
   );
 }
