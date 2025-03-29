@@ -40,20 +40,20 @@ export default function Navbar() {
       isScrolled ? "bg-primary shadow-md" : "bg-transparent"
     }`}>
       <nav className="container mx-auto px-4 md:px-8 py-4 flex justify-between items-center">
-        <Link href="/">
-          <a className="font-bold text-2xl text-white">
-            Beautify <span className="text-white/90">by Angel</span>
-          </a>
+        <Link href="/" className="font-bold text-2xl text-white">
+          Beautify <span className="text-white/90">by Angel</span>
         </Link>
         
         <div className="hidden md:flex space-x-8 text-white">
           {navLinks.map((link) => (
-            <Link key={link.path} href={link.path}>
-              <a className={`hover:text-white/80 transition ${
+            <Link 
+              key={link.path} 
+              href={link.path}
+              className={`hover:text-white/80 transition ${
                 location === link.path ? "text-white/90 font-medium" : ""
-              }`}>
-                {link.name}
-              </a>
+              }`}
+            >
+              {link.name}
             </Link>
           ))}
         </div>
@@ -91,23 +91,27 @@ export default function Navbar() {
           >
             <div className="flex flex-col space-y-4">
               {navLinks.map((link) => (
-                <Link key={link.path} href={link.path}>
-                  <a className={`text-primary hover:text-primary/80 transition ${
+                <Link 
+                  key={link.path} 
+                  href={link.path}
+                  className={`text-primary hover:text-primary/80 transition ${
                     location === link.path ? "text-primary/90 font-medium" : ""
-                  }`}>
-                    {link.name}
-                  </a>
+                  }`}
+                >
+                  {link.name}
                 </Link>
               ))}
-              <Link href="/contact">
-                <a className="border border-primary text-primary px-4 py-2 rounded text-center hover:bg-primary/10 transition">
-                  Contact
-                </a>
+              <Link 
+                href="/contact"
+                className="border border-primary text-primary px-4 py-2 rounded text-center hover:bg-primary/10 transition"
+              >
+                Contact
               </Link>
-              <Link href="/booking">
-                <a className="bg-primary text-white px-6 py-2 rounded text-center hover:bg-primary/90 transition shadow-md mt-2">
-                  Book Now
-                </a>
+              <Link 
+                href="/booking"
+                className="bg-primary text-white px-6 py-2 rounded text-center hover:bg-primary/90 transition shadow-md mt-2"
+              >
+                Book Now
               </Link>
             </div>
           </motion.div>
