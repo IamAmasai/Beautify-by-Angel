@@ -69,6 +69,9 @@ const bookingSchema = z.object({
     required_error: "Please select a service location",
   }),
   additionalLength: z.boolean().default(false),
+  // New fields for braids options
+  braidSource: z.enum(["own", "salon"]).optional(),
+  braidQuantity: z.string().optional(),
   notes: z.string().optional(),
   policyAgreed: z.boolean().refine(val => val === true, {
     message: "You must agree to the booking policy",
@@ -109,6 +112,8 @@ export default function BookingForm({ availableTimes, availableDates, loadingTim
       email: "",
       location: "salon",
       additionalLength: false,
+      braidSource: "own",
+      braidQuantity: "0",
       notes: "",
       policyAgreed: false,
       priceAcknowledged: false,
@@ -121,6 +126,8 @@ export default function BookingForm({ availableTimes, availableDates, loadingTim
   const watchStyleSize = form.watch("styleSize");
   const watchLocation = form.watch("location");
   const watchAdditionalLength = form.watch("additionalLength");
+  const watchBraidSource = form.watch("braidSource");
+  const watchBraidQuantity = form.watch("braidQuantity");
   
   // Update selected service when service id changes
   useEffect(() => {
@@ -179,13 +186,22 @@ export default function BookingForm({ availableTimes, availableDates, loadingTim
         price += 100;
       }
       
+      // Add braid cost if salon provides braids - 70 KSH per braid
+      if (watchService && selectedService && selectedService.title.toLowerCase().includes("braid") && 
+          watchBraidSource === "salon" && watchBraidQuantity) {
+        const braidQuantity = parseInt(watchBraidQuantity) || 0;
+        if (braidQuantity > 0) {
+          price += braidQuantity * 70; // 70 KSH per braid
+        }
+      }
+      
       setTotalPrice(price);
       setBasePrice(selectedPackage.price);
     } catch (error) {
       console.error("Error calculating price:", error);
       setTotalPrice(0);
     }
-  }, [selectedPackage, watchStyleSize, watchLocation, watchAdditionalLength]);
+  }, [selectedPackage, watchStyleSize, watchLocation, watchAdditionalLength, watchBraidSource, watchBraidQuantity, watchService, selectedService]);
   
   // Booking submission
   const bookingMutation = useMutation({
@@ -376,6 +392,77 @@ export default function BookingForm({ availableTimes, availableDates, loadingTim
                 )}
               />
               
+              {/* Braids options - only show for braiding services */}
+              {selectedService && selectedService.title.toLowerCase().includes("braid") && (
+                <div className="space-y-4 border rounded-md p-4 bg-primary/5">
+                  <h3 className="font-medium">Braids Options</h3>
+                  
+                  <FormField
+                    control={form.control}
+                    name="braidSource"
+                    render={({ field }) => (
+                      <FormItem className="space-y-3">
+                        <FormLabel>Braids Source</FormLabel>
+                        <FormControl>
+                          <RadioGroup
+                            onValueChange={field.onChange}
+                            defaultValue={field.value}
+                            className="flex flex-col space-y-1"
+                          >
+                            <FormItem className="flex items-center space-x-3 space-y-0">
+                              <FormControl>
+                                <RadioGroupItem value="own" />
+                              </FormControl>
+                              <FormLabel className="font-normal">
+                                I'll bring my own braids
+                              </FormLabel>
+                            </FormItem>
+                            <FormItem className="flex items-center space-x-3 space-y-0">
+                              <FormControl>
+                                <RadioGroupItem value="salon" />
+                              </FormControl>
+                              <FormLabel className="font-normal">
+                                Purchase braids from salon (70 KSH per braid)
+                              </FormLabel>
+                            </FormItem>
+                          </RadioGroup>
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  
+                  {watchBraidSource === "salon" && (
+                    <FormField
+                      control={form.control}
+                      name="braidQuantity"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Number of Braids Needed</FormLabel>
+                          <FormControl>
+                            <Input 
+                              type="number" 
+                              min="0"
+                              placeholder="Enter quantity" 
+                              {...field} 
+                              onChange={(e) => {
+                                const value = e.target.value;
+                                const numValue = parseInt(value) || 0;
+                                field.onChange(numValue > 0 ? value : "0");
+                              }}
+                            />
+                          </FormControl>
+                          <FormDescription>
+                            Enter the quantity of braids you need (70 KSH per braid)
+                          </FormDescription>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  )}
+                </div>
+              )}
+              
               <Card className="bg-primary/5 border-primary/20">
                 <CardHeader>
                   <CardTitle className="text-lg flex justify-between">
@@ -398,6 +485,13 @@ export default function BookingForm({ availableTimes, availableDates, loadingTim
                     <div className="flex justify-between">
                       <span>Additional Length:</span>
                       <span>+100 KSH</span>
+                    </div>
+                  )}
+                  {selectedService && selectedService.title.toLowerCase().includes("braid") && 
+                  watchBraidSource === "salon" && watchBraidQuantity && parseInt(watchBraidQuantity) > 0 && (
+                    <div className="flex justify-between">
+                      <span>Braids ({watchBraidQuantity} @ 70 KSH each):</span>
+                      <span>+{parseInt(watchBraidQuantity) * 70} KSH</span>
                     </div>
                   )}
                   <div className="border-t pt-2 font-medium flex justify-between">

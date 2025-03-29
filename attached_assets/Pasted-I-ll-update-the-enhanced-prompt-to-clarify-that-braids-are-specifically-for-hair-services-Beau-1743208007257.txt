@@ -1,0 +1,47 @@
+I'll update the enhanced prompt to clarify that braids are specifically for hair services:
+
+# Beauty Service Booking System Requirements
+
+## Client Booking Flow
+1. The client navigates to the packages section
+2. Client selects desired services with base price from package options
+3. Client chooses between:
+   - In-store service (no additional cost)
+   - Home service (additional 200 KSh added automatically)
+4. For hair services with braids, client chooses between:
+   - Using their own braids (cost: 0 KSh extra) OR
+   - Purchasing braids from us (70 KSh per braid)
+     - Client selects quantity of braids
+     - System automatically adds this cost to the total
+5. Any other additional services are added to the total price
+6. Complete total price is displayed clearly in KSh on the client's screen
+7. System shows message: "Booking confirms acceptance of price and policy"
+8. Client completes booking
+
+## Pricing Structure
+- Base price: Selected from packages and pricing list
+- Home service: +200 KSh
+- For hair braiding services:
+  - Client's own braids: +0 KSh
+  - Our braids: +70 KSh per braid (quantity selected by client)
+- Other additional services priced according to the template
+
+## Service Selection Features
+- Allow clients to select from multiple style options for:
+  - Henna designs
+  - Makeup styles
+  - Hair services (including braiding options)
+  - Nail designs
+- Import style options from the internet where our catalog lacks options
+- Price according to the template provided in KSh
+
+## Availability Management System
+- Create an admin panel for the business owner to:
+  - Set available and unavailable time slots
+  - Update availability in real-time
+- Ensure the availability system:
+  - Displays open time slots to clients
+  - Marks slots as "taken" once booked
+  - Prevents double-booking of the same time slot
+
+The system should calculate and display the total cost progressively as clients make selections, with all pricing in Kenyan Shillings (KSh).

@@ -27,10 +27,11 @@ export default function ServiceCard({ service }: ServiceProps) {
       <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
         <h3 className="text-xl font-semibold mb-1">{service.title}</h3>
         <p className="text-sm opacity-90 mb-3">{service.description}</p>
-        <Link href={service.link || `/services/${service.id}`}>
-          <a className="inline-block text-[var(--color-amber)] font-medium hover:underline">
-            Learn More →
-          </a>
+        <Link 
+          href={service.link || `/services/${service.id}`}
+          className="inline-block text-[var(--color-amber)] font-medium hover:underline"
+        >
+          Learn More →
         </Link>
       </div>
     </motion.div>
