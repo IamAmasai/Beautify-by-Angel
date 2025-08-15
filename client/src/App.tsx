@@ -7,7 +7,6 @@ import { AuthProvider } from "@/hooks/use-auth";
 import { ProtectedRoute } from "@/lib/protected-route";
 import HomePage from "@/pages/HomePage";
 import ServicePage from "@/pages/ServicePage";
-import BookingPage from "@/pages/BookingPage";
 import AdminPage from "@/pages/AdminPage";
 import ContactPage from "@/pages/ContactPage";
 import AboutPage from "@/pages/AboutPage";
@@ -32,7 +31,6 @@ function Router() {
       <Switch>
         <Route path="/" component={HomePage} />
         <Route path="/services/:id" component={ServicePage} />
-        <Route path="/booking" component={BookingPage} />
         <ProtectedRoute path="/admin">
           <AdminPage />
         </ProtectedRoute>

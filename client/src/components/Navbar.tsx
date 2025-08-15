@@ -65,11 +65,11 @@ export default function Navbar() {
             </Button>
           </Link>
           
-          <Link href="/booking">
+          <a href="tel:+254123456789" className="text-white hover:text-white/80 transition">
             <Button className="bg-white text-primary hover:bg-white/90 px-6 py-2 rounded shadow-md">
-              Book Now
+              Call: +254 123 456 789
             </Button>
-          </Link>
+          </a>
         </div>
         
         <button 
@@ -107,12 +107,12 @@ export default function Navbar() {
               >
                 Contact
               </Link>
-              <Link 
-                href="/booking"
+              <a 
+                href="tel:+254123456789"
                 className="bg-primary text-white px-6 py-2 rounded text-center hover:bg-primary/90 transition shadow-md mt-2"
               >
-                Book Now
-              </Link>
+                Call: +254 123 456 789
+              </a>
             </div>
           </motion.div>
         )}
