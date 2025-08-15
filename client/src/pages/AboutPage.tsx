@@ -12,6 +12,7 @@ export default function AboutPage() {
             <p className="text-xl max-w-2xl mx-auto">
               The story, vision, and passion behind Beautify by Angel
             </p>
+          </div>
         </div>
       </section>
       
