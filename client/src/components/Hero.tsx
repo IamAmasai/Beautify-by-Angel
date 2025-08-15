@@ -6,11 +6,11 @@ export default function Hero() {
   return (
     <section className="relative h-screen flex items-center justify-center bg-[var(--color-plum)]">
       <div className="absolute inset-0 w-full h-full overflow-hidden">
-        <img 
-          src="https://images.unsplash.com/photo-1607082754307-63b23da7d658?q=80&w=2070&auto=format&fit=crop" 
-          alt="Beauty salon professional at work" 
-          className="w-full h-full object-cover" 
-        />
+          <img 
+            src="/assets/uploads/hairstyle.jpg" 
+            alt="Beauty salon professional at work" 
+            className="w-full h-full object-cover" 
+          />
         <div className="absolute inset-0 bg-gradient-to-t from-[rgba(26,26,26,0.7)] to-[rgba(26,26,26,0.4)]"></div>
       </div>
       

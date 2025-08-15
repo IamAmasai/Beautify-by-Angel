@@ -48,7 +48,7 @@ export class MemStorage implements IStorage {
         description: service.description,
         image: service.image,
         longDescription: service.longDescription || service.description,
-        startingPrice: service.startingPrice || "2,000",
+  startingPrice: service.startingPrice || "4,000",
         duration: service.duration || "1-2 hours",
         createdAt: new Date()
       };

@@ -12,7 +12,6 @@ export default function AboutPage() {
             <p className="text-xl max-w-2xl mx-auto">
               The story, vision, and passion behind Beautify by Angel
             </p>
-          </div>
         </div>
       </section>
       
@@ -39,7 +38,7 @@ export default function AboutPage() {
               <h2 className="text-3xl font-bold text-[var(--color-plum)] mb-6">My Journey</h2>
               <div className="space-y-4 text-gray-700">
                 <p>
-                  I'm Angel Mwende, founder and creative director of Beautify by Angel. My journey in the beauty industry began over a decade ago, sparked by a passion for hair braiding that I discovered as a young girl growing up in Nairobi.
+                  I'm Angel Mwende, founder and creative director of Beautify by Angel. My journey in the beauty industry began over a decade ago, sparked by a passion for hair braiding that I discovered as a young girl growing up in Mombasa.
                 </p>
                 <p>
                   After receiving formal training at one of Kenya's premier beauty academies, I expanded my skillset to include makeup artistry, nail design, and henna art. My approach combines traditional African beauty practices with modern techniques, creating unique experiences for my clients.

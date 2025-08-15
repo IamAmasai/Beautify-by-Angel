@@ -226,7 +226,7 @@ export default function ServicePage() {
                               </ul>
                             </div>
                             <div className="md:text-right">
-                              <p className="text-2xl font-bold text-[var(--color-plum)]">KSh 2,500</p>
+                              <p className="text-2xl font-bold text-[var(--color-plum)]">KSh 5,000</p>
                               <p className="text-sm text-gray-500">1-2 hours</p>
                               <Link href="/contact">
                                 <Button className="mt-4 bg-[var(--color-amber)] hover:bg-[var(--color-amber)]/90">
@@ -272,7 +272,7 @@ export default function ServicePage() {
                               </ul>
                             </div>
                             <div className="md:text-right">
-                              <p className="text-2xl font-bold text-[var(--color-plum)]">KSh 4,500</p>
+                              <p className="text-2xl font-bold text-[var(--color-plum)]">KSh 9,000</p>
                               <p className="text-sm text-gray-500">2-3 hours</p>
                               <Link href="/contact">
                                 <Button className="mt-4 bg-[var(--color-amber)] hover:bg-[var(--color-amber)]/90">
@@ -324,7 +324,7 @@ export default function ServicePage() {
                               </ul>
                             </div>
                             <div className="md:text-right">
-                              <p className="text-2xl font-bold text-[var(--color-plum)]">KSh 8,000</p>
+                              <p className="text-2xl font-bold text-[var(--color-plum)]">KSh 16,000</p>
                               <p className="text-sm text-gray-500">3-4 hours</p>
                               <Link href="/contact">
                                 <Button className="mt-4 bg-[var(--color-amber)] hover:bg-[var(--color-amber)]/90">

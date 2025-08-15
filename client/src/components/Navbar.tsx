@@ -65,9 +65,9 @@ export default function Navbar() {
             </Button>
           </Link>
           
-          <a href="tel:+254123456789" className="text-white hover:text-white/80 transition">
+          <a href="tel:+254706805891" className="text-white hover:text-white/80 transition">
             <Button className="bg-white text-primary hover:bg-white/90 px-6 py-2 rounded shadow-md">
-              Call: +254 123 456 789
+              Call: +254 706 805 891
             </Button>
           </a>
         </div>
@@ -108,10 +108,10 @@ export default function Navbar() {
                 Contact
               </Link>
               <a 
-                href="tel:+254123456789"
+                href="tel:+254706805891"
                 className="bg-primary text-white px-6 py-2 rounded text-center hover:bg-primary/90 transition shadow-md mt-2"
               >
-                Call: +254 123 456 789
+                Call: +254 706 805 891
               </a>
             </div>
           </motion.div>

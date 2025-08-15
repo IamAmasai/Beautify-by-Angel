@@ -46,7 +46,7 @@ export default function AdminPanel() {
           </CardHeader>
           <CardContent>
             <p className="text-sm text-gray-600">
-              Customers can reach out via the contact page or phone: +254 123 456 789
+              Customers can reach out via the contact page or phone: +254 706 805 891
             </p>
           </CardContent>
         </Card>

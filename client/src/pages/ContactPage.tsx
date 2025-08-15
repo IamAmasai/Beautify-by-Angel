@@ -115,7 +115,7 @@ export default function ContactPage() {
                         </div>
                         <div className="ml-4">
                           <h4 className="font-semibold text-gray-800">Address</h4>
-                          <p className="text-gray-600">Nairobi, Kenya<br/>Home service available throughout the city</p>
+                          <p className="text-gray-600">Mombasa, Kenya<br/>Home service available throughout the city</p>
                         </div>
                       </div>
                       
@@ -127,7 +127,7 @@ export default function ContactPage() {
                         </div>
                         <div className="ml-4">
                           <h4 className="font-semibold text-gray-800">Phone</h4>
-                          <p className="text-gray-600">+254 712 345 678</p>
+                          <p className="text-gray-600">+254 706 805 891</p>
                         </div>
                       </div>
                       
@@ -139,7 +139,7 @@ export default function ContactPage() {
                         </div>
                         <div className="ml-4">
                           <h4 className="font-semibold text-gray-800">Email</h4>
-                          <p className="text-gray-600">angel@beautifybyangel.com</p>
+                          <p className="text-gray-600">cynthiamumo02@gmail.com</p>
                         </div>
                       </div>
                       
@@ -151,7 +151,7 @@ export default function ContactPage() {
                         </div>
                         <div className="ml-4">
                           <h4 className="font-semibold text-gray-800">Working Hours</h4>
-                          <p className="text-gray-600">Tuesday - Saturday: 9:00 AM - 7:00 PM<br/>Sunday & Monday: Closed</p>
+                          <p className="text-gray-600">Monday - Saturday: 9:00 AM - 7:00 PM<br/>Sunday: Closed</p>
                         </div>
                       </div>
                     </div>

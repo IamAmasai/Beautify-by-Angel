@@ -13,55 +13,55 @@ export const services = [
       "Detailed aftercare instructions to maintain your style",
       "Comfortable, relaxing experience throughout the service"
     ],
-    startingPrice: "1,000",
+    startingPrice: "2,000",
     duration: "1-6 hours",
     priceImage: "/assets/uploads/price-1.jpg",
     packages: [
       {
         name: "Knotless Braids",
-        price: "750-900",
+        price: "1,500-1,800",
         duration: "3-5 hours",
         description: "Comfortable, natural-looking braids with no knots at the root",
         features: [
-          "Large (750 KSH), Medium (800 KSH), or Small (900 KSH)",
+          "Large (1,500 KSH), Medium (1,600 KSH), or Small (1,800 KSH)",
           "Quality braiding hair (can be purchased from us)",
-          "Additional length (+100 KSH)",
-          "Home service available (+200 KSH)"
+          "Additional length (+200 KSH)",
+          "Home service available (+400 KSH)"
         ]
       },
       {
         name: "French Curls",
-        price: "800-1000",
+        price: "1,600-2,000",
         duration: "3-5 hours",
         description: "Beautiful braids with elegant curled ends",
         features: [
-          "Large (800 KSH), Medium (900 KSH), or Small (1000 KSH)",
+          "Large (1,600 KSH), Medium (1,800 KSH), or Small (2,000 KSH)",
           "Premium quality hair",
-          "Additional length (+100 KSH)",
-          "Home service available (+200 KSH)"
+          "Additional length (+200 KSH)",
+          "Home service available (+400 KSH)"
         ]
       },
       {
         name: "Twists",
-        price: "400-900",
+        price: "800-1,800",
         duration: "2-4 hours",
         description: "Natural hair twists in various sizes",
         features: [
-          "Large (400 KSH), Medium (500 KSH), Small (600 KSH), or Mini (900 KSH)",
-          "Brazilian/Fluffy/Kinky options available (750-900 KSH)",
+          "Large (800 KSH), Medium (1,000 KSH), Small (1,200 KSH), or Mini (1,800 KSH)",
+          "Brazilian/Fluffy/Kinky options available (1,500-1,800 KSH)",
           "Additional styling options",
-          "Home service available (+200 KSH)"
+          "Home service available (+400 KSH)"
         ]
       },
       {
         name: "Cornrows & Lines",
-        price: "150-900",
+        price: "300-1,800",
         duration: "1-3 hours",
         description: "Stylish braided lines and patterns",
         features: [
-          "Cornrows: Large (150 KSH), Medium (250 KSH), Small (350 KSH)",
-          "Ghanian/Abuja/Pencil: Large (700 KSH), Medium (800 KSH), Small (900 KSH)",
-          "Fulani Braids: Large (800 KSH), Medium (850 KSH), Small (900 KSH)",
+          "Cornrows: Large (300 KSH), Medium (500 KSH), Small (700 KSH)",
+          "Ghanian/Abuja/Pencil: Large (1,400 KSH), Medium (1,600 KSH), Small (1,800 KSH)",
+          "Fulani Braids: Large (1,600 KSH), Medium (1,700 KSH), Small (1,800 KSH)",
           "Additional styling options available"
         ]
       }
@@ -87,13 +87,13 @@ export const services = [
       "Detailed application focusing on your best features",
       "Long-lasting results with setting techniques"
     ],
-    startingPrice: "1,000",
+    startingPrice: "2,000",
     duration: "1-2 hours",
     priceImage: "/assets/uploads/price-2.jpg",
     packages: [
       {
         name: "Natural Look",
-        price: "1,000",
+        price: "2,000",
         duration: "45 minutes",
         description: "Everyday makeup application for a polished look",
         features: [
@@ -101,12 +101,12 @@ export const services = [
           "Foundation and concealer application",
           "Basic eye makeup",
           "Blush and lipstick",
-          "Home service available (+200 KSH)"
+          "Home service available (+400 KSH)"
         ]
       },
       {
         name: "Special Occasion",
-        price: "2,500",
+        price: "5,000",
         duration: "1.5 hours",
         description: "Enhanced makeup for parties, photoshoots, and special events",
         features: [
@@ -119,8 +119,8 @@ export const services = [
         ]
       },
       {
-        name: "Bridal Makeup",
-        price: "5,000",
+  name: "Bridal Makeup",
+  price: "10,000",
         duration: "2 hours",
         description: "Complete luxury makeup experience for your special day",
         features: [
@@ -130,7 +130,7 @@ export const services = [
           "Waterproof and long-wearing formulas",
           "Custom lashes",
           "Touch-up kit for the day",
-          "Home service available (+200 KSH)"
+          "Home service available (+400 KSH)"
         ]
       }
     ],
@@ -156,26 +156,26 @@ export const services = [
       "Custom nail art based on your preferences",
       "Long-lasting results with proper sealing techniques"
     ],
-    startingPrice: "500",
+    startingPrice: "1,000",
     duration: "1-2 hours",
     priceImage: "/assets/uploads/price-3.jpg",
     packages: [
       {
         name: "Basic Manicure",
-        price: "500-800",
+        price: "1,000-1,600",
         duration: "45 minutes",
         description: "Essential nail care and polish application",
         features: [
           "Nail shaping and filing",
           "Cuticle treatment",
           "Regular polish application",
-          "Home service available (+200 KSH)",
+          "Home service available (+400 KSH)",
           "Various design options available"
         ]
       },
       {
         name: "Gel Application",
-        price: "1,000-1,500",
+        price: "2,000-3,000",
         duration: "1 hour",
         description: "Long-lasting gel polish with nail care",
         features: [
@@ -187,8 +187,8 @@ export const services = [
         ]
       },
       {
-        name: "Luxury Acrylic Nails",
-        price: "2,000-3,000",
+  name: "Luxury Acrylic Nails",
+  price: "4,000-6,000",
         duration: "1.5-2 hours",
         description: "Premium acrylic application with custom nail art",
         features: [
@@ -222,13 +222,13 @@ export const services = [
       "Aftercare instructions for maximum color and longevity",
       "Designs typically last 1-3 weeks"
     ],
-    startingPrice: "500",
+    startingPrice: "1,000",
     duration: "30-120 minutes",
     priceImage: "/assets/uploads/price-1.jpg",
     packages: [
       {
         name: "Simple Henna",
-        price: "500-1,000",
+        price: "1,000-2,000",
         duration: "30 minutes",
         description: "Small henna designs for hands or feet",
         features: [
@@ -236,12 +236,12 @@ export const services = [
           "Natural henna paste",
           "Traditional or modern patterns",
           "Aftercare instructions",
-          "Home service available (+200 KSH)"
+          "Home service available (+400 KSH)"
         ]
       },
       {
         name: "Celebration Henna",
-        price: "1,500-3,000",
+        price: "3,000-6,000",
         duration: "60 minutes",
         description: "Elaborate designs for special occasions",
         features: [
@@ -255,7 +255,7 @@ export const services = [
       },
       {
         name: "Bridal Henna",
-        price: "4,000-6,000",
+        price: "8,000-12,000",
         duration: "90-120 minutes",
         description: "Complete bridal henna experience with the most intricate designs",
         features: [
@@ -265,7 +265,7 @@ export const services = [
           "Highly detailed traditional or fusion patterns",
           "Hidden initials or messages (optional)",
           "Complimentary touch-ups",
-          "Home service available (+200 KSH)"
+          "Home service available (+400 KSH)"
         ]
       }
     ],
