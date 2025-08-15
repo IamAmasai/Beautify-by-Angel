@@ -186,9 +186,9 @@ export default function ServicePage() {
                           <div className="md:text-right">
                             <p className="text-2xl font-bold text-[var(--color-plum)]">KSh {pkg.price}</p>
                             <p className="text-sm text-gray-500">{pkg.duration}</p>
-                            <Link href="/booking">
+                            <Link href="/contact">
                               <Button className="mt-4 bg-[var(--color-amber)] hover:bg-[var(--color-amber)]/90">
-                                Book This Package
+                                Contact to Book
                               </Button>
                             </Link>
                           </div>
@@ -228,9 +228,9 @@ export default function ServicePage() {
                             <div className="md:text-right">
                               <p className="text-2xl font-bold text-[var(--color-plum)]">KSh 2,500</p>
                               <p className="text-sm text-gray-500">1-2 hours</p>
-                              <Link href="/booking">
+                              <Link href="/contact">
                                 <Button className="mt-4 bg-[var(--color-amber)] hover:bg-[var(--color-amber)]/90">
-                                  Book This Package
+                                  Contact to Book
                                 </Button>
                               </Link>
                             </div>
@@ -274,9 +274,9 @@ export default function ServicePage() {
                             <div className="md:text-right">
                               <p className="text-2xl font-bold text-[var(--color-plum)]">KSh 4,500</p>
                               <p className="text-sm text-gray-500">2-3 hours</p>
-                              <Link href="/booking">
+                              <Link href="/contact">
                                 <Button className="mt-4 bg-[var(--color-amber)] hover:bg-[var(--color-amber)]/90">
-                                  Book This Package
+                                  Contact to Book
                                 </Button>
                               </Link>
                             </div>
@@ -326,9 +326,9 @@ export default function ServicePage() {
                             <div className="md:text-right">
                               <p className="text-2xl font-bold text-[var(--color-plum)]">KSh 8,000</p>
                               <p className="text-sm text-gray-500">3-4 hours</p>
-                              <Link href="/booking">
+                              <Link href="/contact">
                                 <Button className="mt-4 bg-[var(--color-amber)] hover:bg-[var(--color-amber)]/90">
-                                  Book This Package
+                                  Contact to Book
                                 </Button>
                               </Link>
                             </div>
@@ -345,9 +345,9 @@ export default function ServicePage() {
           <div>
             <Card className="sticky top-24">
               <CardContent className="p-6">
-                <h3 className="text-xl font-bold text-[var(--color-plum)] mb-4">Ready to Book?</h3>
+                <h3 className="text-xl font-bold text-[var(--color-plum)] mb-4">Ready to Get Started?</h3>
                 <p className="text-gray-700 mb-6">
-                  Experience premium {service.title.toLowerCase()} with Angel. Book your appointment today.
+                  Experience premium {service.title.toLowerCase()} with Angel. Contact us to schedule your appointment.
                 </p>
                 
                 <div className="space-y-4 mb-6">
@@ -367,9 +367,9 @@ export default function ServicePage() {
                   </div>
                 </div>
                 
-                <Link href="/booking">
+                <Link href="/contact">
                   <Button className="w-full bg-[var(--color-amber)] hover:bg-[var(--color-amber)]/90 text-lg py-6">
-                    Book Now
+                    Contact Now
                   </Button>
                 </Link>
                 
