@@ -70,7 +70,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         const validationError = fromZodError(error);
         return res.status(400).json({ message: validationError.message });
       }
-      res.status(500).json({ message: 'Error submitting contact form', error: error.message });
+  res.status(500).json({ message: 'Error submitting contact form', error: (error as any).message });
     }
   });
 
@@ -80,7 +80,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const messages = await storage.getAllContactMessages();
       res.json(messages);
     } catch (error) {
-      res.status(500).json({ message: 'Error fetching contact messages', error: error.message });
+  res.status(500).json({ message: 'Error fetching contact messages', error: (error as any).message });
     }
   });
 
@@ -95,7 +95,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       res.json(message);
     } catch (error) {
-      res.status(500).json({ message: 'Error fetching contact message', error: error.message });
+  res.status(500).json({ message: 'Error fetching contact message', error: (error as any).message });
     }
   });
 
@@ -110,7 +110,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       res.json(message);
     } catch (error) {
-      res.status(500).json({ message: 'Error updating contact message', error: error.message });
+  res.status(500).json({ message: 'Error updating contact message', error: (error as any).message });
     }
   });
 
