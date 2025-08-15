@@ -46,9 +46,7 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/booking">
-                  <a className="text-gray-300 hover:text-[var(--color-amber)] transition">Book Now</a>
-                </Link>
+                <a href="tel:+254123456789" className="text-gray-300 hover:text-[var(--color-amber)] transition">Call Us</a>
               </li>
               <li>
                 <Link href="/contact">
@@ -82,8 +80,8 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/booking">
-                  <a className="text-gray-300 hover:text-[var(--color-amber)] transition">Service Packages</a>
+                <Link href="/contact">
+                  <a className="text-gray-300 hover:text-[var(--color-amber)] transition">Pricing Info</a>
                 </Link>
               </li>
             </ul>
@@ -130,7 +128,7 @@ export default function Footer() {
             <div className="flex space-x-6 mt-4 md:mt-0">
               <a href="#" className="text-sm text-gray-400 hover:text-[var(--color-amber)] transition">Privacy Policy</a>
               <a href="#" className="text-sm text-gray-400 hover:text-[var(--color-amber)] transition">Terms of Service</a>
-              <a href="#" className="text-sm text-gray-400 hover:text-[var(--color-amber)] transition">Booking Policy</a>
+              <a href="#" className="text-sm text-gray-400 hover:text-[var(--color-amber)] transition">Privacy Policy</a>
             </div>
           </div>
         </div>

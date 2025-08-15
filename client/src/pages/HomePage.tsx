@@ -130,20 +130,20 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Book Now CTA */}
+      {/* Contact CTA */}
       <section className="py-16 bg-[var(--color-plum)] text-white">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-6">Ready to Experience Luxury Beauty?</h2>
           <p className="text-xl mb-8 max-w-2xl mx-auto">
-            Schedule your appointment with Angel and discover beauty woven in every detail
+            Contact Angel today to schedule your appointment and discover beauty woven in every detail
           </p>
-          <Link href="/booking">
+          <Link href="/contact">
             <motion.a 
               className="inline-block bg-[var(--color-amber)] text-white text-lg px-8 py-3 rounded-md shadow-lg hover:bg-opacity-90 transition"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              Book Your Appointment
+              Contact Us Today
             </motion.a>
           </Link>
         </div>
