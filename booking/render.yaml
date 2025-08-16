@@ -1,0 +1,30 @@
+services:
+  - type: web
+    name: beautify-booking-server
+    env: node
+    plan: starter
+    buildCommand: cd booking/server && npm install && npx prisma generate && npm run build
+    startCommand: cd booking/server && npx prisma migrate deploy && npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        generateValue: true
+      - key: ADMIN_EMAIL
+        sync: false
+      - key: ADMIN_PASSWORD_HASH
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: MPESA_CONSUMER_KEY
+        sync: false
+      - key: MPESA_CONSUMER_SECRET
+        sync: false
+      - key: MPESA_SHORT_CODE
+        sync: false
+      - key: MPESA_PASSKEY
+        sync: false
+      - key: MPESA_CALLBACK_URL
+        sync: false
+      - key: CLIENT_URL
+        sync: false

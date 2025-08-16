@@ -1,0 +1,17 @@
+name: Deploy Server to Render
+
+on:
+  push:
+    branches: [ main ]
+    paths: [ 'booking/server/**', 'booking/render.yaml' ]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Trigger Render Deploy
+      if: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+      run: |
+        curl -X POST ${{ secrets.RENDER_DEPLOY_HOOK_URL }}

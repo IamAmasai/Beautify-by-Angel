@@ -1,0 +1,38 @@
+name: Deploy Booking Client
+
+on:
+  push:
+    branches: [ main ]
+    paths: [ 'booking/client/**' ]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        cache-dependency-path: booking/client/package-lock.json
+    
+    - name: Install dependencies
+      working-directory: booking/client
+      run: npm ci
+    
+    - name: Build
+      working-directory: booking/client
+      env:
+        VITE_API_URL: ${{ secrets.PROD_API_URL }}
+      run: npm run build
+    
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: booking/client/dist
+        publish_branch: gh-pages
