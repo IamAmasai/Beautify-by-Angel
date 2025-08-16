@@ -115,7 +115,7 @@ export default function ContactPage() {
                         </div>
                         <div className="ml-4">
                           <h4 className="font-semibold text-gray-800">Address</h4>
-                          <p className="text-gray-600">Mombasa, Kenya<br/>Home service available throughout the city</p>
+                          <p className="text-gray-600">Nairobi , Kenya<br/>Home service available throughout the city</p>
                         </div>
                       </div>
                       
