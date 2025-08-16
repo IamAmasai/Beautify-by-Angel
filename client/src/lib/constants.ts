@@ -286,35 +286,30 @@ export const testimonials = [
   {
     id: 1,
     name: "Wanjiku N.",
-    avatar: "/assets/uploads/angel.jpg",
     text: "Angel's attention to detail with my braids was exceptional. The style lasted longer than any I've had before, and the details made all the difference. Will definitely be back!",
     service: "Hair Braiding Service"
   },
   {
     id: 2,
     name: "Amina K.",
-    avatar: "/assets/uploads/angel.jpg",
     text: "I had my makeup done for my wedding by Angel, and I've never felt more beautiful. She understood exactly what I wanted and executed it flawlessly. Everyone complimented how natural yet glamorous I looked.",
     service: "Makeup Artistry Service"
   },
   {
     id: 3,
     name: "Leila M.",
-    avatar: "/assets/uploads/angel.jpg",
     text: "The henna designs Angel created for my sister's wedding were breathtaking. Everyone was asking who did them! She truly has a gift for creating intricate patterns that tell a story.",
     service: "Henna Artistry Service"
   },
   {
     id: 4,
     name: "Grace O.",
-    avatar: "/assets/uploads/angel.jpg",
     text: "My nail art from Beautify by Angel is always a conversation starter. Angel's creativity and precision are unmatched in Nairobi. My nails have never looked better!",
     service: "Nail Artistry Service"
   },
   {
     id: 5,
     name: "Sarah J.",
-    avatar: "/assets/uploads/angel.jpg",
     text: "I've tried many beauty services in Nairobi, but Angel truly lives up to her slogan - there is beauty woven in every detail of her work. The box braids she did for me were perfect!",
     service: "Hair Braiding Service"
   }

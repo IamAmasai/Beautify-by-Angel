@@ -97,8 +97,8 @@ export default function TestimonialCarousel() {
                 <div className="w-full md:col-start-2">
                   <div className="bg-[var(--color-ivory)] rounded-lg p-6 shadow-md h-full flex flex-col">
                     <div className="flex items-center mb-4">
-                      <div className="w-12 h-12 bg-[var(--color-blush)] rounded-full overflow-hidden">
-                        <img src={testimonials[currentIndex].avatar} alt={testimonials[currentIndex].name} className="w-full h-full object-cover" />
+                      <div className="w-12 h-12 bg-[var(--color-blush)] rounded-full flex items-center justify-center text-white font-semibold text-sm">
+                        {testimonials[currentIndex].name.split(' ').map(s=>s[0]).slice(0,2).join('')}
                       </div>
                       <div className="ml-4">
                         <h4 className="font-semibold">{testimonials[currentIndex].name}</h4>
