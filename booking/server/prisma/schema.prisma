@@ -1,0 +1,92 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+enum BookingStatus {
+  PENDING
+  AWAITING_PAYMENT
+  CONFIRMED
+  CANCELED
+}
+
+enum PaymentStatus {
+  PENDING
+  SUCCESS
+  FAILED
+}
+
+model User {
+  id        String  @id @default(cuid())
+  email     String  @unique
+  password  String
+  role      String  @default("admin")
+  createdAt DateTime @default(now())
+}
+
+model Service {
+  id          String  @id @default(cuid())
+  name        String
+  description String
+  basePrice   Int
+  durationMin Int
+  category    String
+  active      Boolean @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  bookings    Booking[]
+}
+
+model AvailabilityRule {
+  id        String  @id @default(cuid())
+  weekday   Int
+  startTime String
+  endTime   String
+  active    Boolean @default(true)
+}
+
+model TimeOff {
+  id        String  @id @default(cuid())
+  date      DateTime
+  startTime String?
+  endTime   String?
+  reason    String?
+}
+
+model Booking {
+  id            String  @id @default(cuid())
+  serviceId     String
+  service       Service @relation(fields: [serviceId], references: [id])
+  date          DateTime
+  name          String
+  phone         String
+  email         String
+  notes         String?
+  totalKsh      Int
+  depositKsh    Int
+  paidKsh       Int     @default(0)
+  paymentOption String
+  status        BookingStatus @default(PENDING)
+  policyAgreed  Boolean
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  payment       Payment?
+}
+
+model Payment {
+  id           String  @id @default(cuid())
+  bookingId    String  @unique
+  booking      Booking @relation(fields: [bookingId], references: [id])
+  method       String
+  status       PaymentStatus @default(PENDING)
+  amountKsh    Int
+  phone        String
+  receipt      String?
+  rawCallback  Json?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}

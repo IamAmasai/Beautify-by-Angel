@@ -1,0 +1,26 @@
+:root{ --plum:#4B2E4A; --gold:#D4A017; --ivory:#F5F1E9; --blush:#F8C1C6; --black:#1A1A1A; --white:#FFFFFF; --radius:14px; }
+*{box-sizing:border-box}
+body{ font-family: Inter, "Helvetica Neue", Arial, sans-serif; margin:0; color:var(--black); background:var(--white); }
+.container{max-width:960px;margin:0 auto;padding:20px}
+.header{ position:sticky;top:0;background:rgba(255,255,255,0.9);backdrop-filter:saturate(1.2) blur(8px); border-bottom:1px solid #eee; }
+.brand{display:flex;align-items:center;gap:12px;padding:12px 20px}
+.brand h1{font-weight:700;letter-spacing:.2px;margin:0;color:var(--plum)}
+.cta{background:var(--gold);color:#000;font-weight:600;border:none;padding:10px 16px;border-radius:999px;cursor:pointer}
+.card{ background:var(--ivory); border:1px solid #eee; border-radius:var(--radius); padding:16px; }
+.grid{display:grid;gap:16px}
+.grid-2{grid-template-columns:repeat(2,1fr)}
+@media (max-width:720px){.grid-2{grid-template-columns:1fr}}
+.input, select{ width:100%;padding:12px;border:1px solid #ddd;border-radius:10px;background:#fff;font-size:14px }
+.label{font-size:13px;color:#444;margin-bottom:6px;display:block}
+.section-title{font-size:22px;font-weight:700;color:var(--plum);margin:20px 0 8px}
+.subtle{color:#666;font-size:13px}
+.service-item{display:flex;justify-content:space-between;align-items:center;padding:10px;border-radius:12px;background:#fff;border:1px solid #eee}
+.service-item:hover{border-color:#ddd}
+.badge{background:var(--plum);color:#fff;border-radius:999px;padding:4px 10px;font-size:12px}
+.button{background:var(--plum);color:#fff;border:none;padding:12px 16px;border-radius:10px;font-weight:600;cursor:pointer}
+.button.secondary{background:#fff;color:var(--plum);border:1px solid var(--plum)}
+.footer{padding:40px;text-align:center;color:#666;font-size:12px}
+.link{color:var(--plum);text-decoration:none}
+.policy{font-size:12px;color:#444}
+.total{font-size:18px;font-weight:700}
+.brandline{color:#666}
